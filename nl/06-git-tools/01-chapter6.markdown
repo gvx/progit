@@ -59,7 +59,7 @@ Veel mensen zijn bezorgd geworden dat ze op een bepaald punt, door random toeval
 
 Mocht je een object committen dat hashed naar dezelfde SHA-1 waarde als een vorig object in je repository, dan zal Git het vorige reeds aanwezige object in je Git database zien en aannemen dat het al geschreven was. Als je dat object opnieuw probeert uit te checken op een bepaald punt, dan zul je altijd de gegevens van het eerste object krijgen.
 
-Maar, je moet je bewust zijn hoe belachelijk onwaarschijnlijk dit scenario is. De SHA-1 waarde is 20 bytes of 160 bits. Het aantal benodigde random gehashte objecten om een 50% waarschijnlijkheid van een enkele botsing te garanderen is ongeveer 2^80 (de formule om botsingswaarschijnlijkheid te bepalen is `p = (n(n-1)/2) * (1/2^160)`). 2^80 is 1.2 x 10^24 of 1 miljoen miljard miljad. Dat is 1.200 keer het aantal zandkorrels op de aarde.
+Maar, je moet je bewust zijn hoe belachelijk onwaarschijnlijk dit scenario is. De SHA-1 waarde is 20 bytes of 160 bits. Het aantal benodigde random gehashte objecten om een 50% waarschijnlijkheid van een enkele botsing te garanderen is ongeveer 2^80 (de formule om botsingswaarschijnlijkheid te bepalen is `p = (n(n-1)/2) * (1/2^160)`). 2^80 is 1.2 x 10^24 of 1 miljoen miljard miljard. Dat is 1.200 keer het aantal zandkorrels op de aarde.
 
 Hier is een voorbeeld om je een idee te geven wat er voor nodig is om een SHA-1 botsing te krijgen. Als alle 6.5 miljard mensen op aarde zouden gaan programmeren, en iedere seconde zou iedereen code genereren die gelijk was aan de hele Linux kernel-geschiedenis (1 miljoen Git objecten) en dat in één gigantische Git repository pushen, dan zou het vijf jaar duren voordat die repository genoeg objecten zou bevatten om een 50% waarschijnlijkheid van één enkele SHA-1 object botsing te krijgen. Er bestaat een grotere kans dat ieder lid van je programmeerteam zal worden aangevallen en worden gedood door wolven in ongerelateerde incidenten op dezelfde avond.
 
@@ -119,7 +119,7 @@ Om reflog informatie te zien, die in hetzelfde formaat gezet is als de `git log`
 
 	    Merge commit 'phedders/rdocs'
 
-Het is belangrijk om te zien dat deze informatie strikt lokaal is – het is een log van wat jij hebt gedaan in jouw repository. De referenties zullen niet hetzelfde zijn in iemand anders zijn kopie van de repository; en meteen nadat je een eerste kloon van een repository hebt gemaakt, heb je een lege reflog, omdat er nog geen aktiviteit is geweest in je repository. `git show HEAD@{2.months.ago}` uitvoeren werkt alleen als je het project minstens twee maanden geleden gekloond hebt – als je het vijf minuten geleden gekloond hebt, krijg je geen resultaten.
+Het is belangrijk om te zien dat deze informatie strikt lokaal is – het is een log van wat jij hebt gedaan in jouw repository. De referenties zullen niet hetzelfde zijn in iemand anders zijn kopie van de repository; en meteen nadat je een eerste kloon van een repository hebt gemaakt, heb je een lege reflog, omdat er nog geen activiteit is geweest in je repository. `git show HEAD@{2.months.ago}` uitvoeren werkt alleen als je het project minstens twee maanden geleden gekloond hebt – als je het vijf minuten geleden gekloond hebt, krijg je geen resultaten.
 
 ### Voorouder Referenties ###
 

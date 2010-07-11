@@ -10,12 +10,12 @@ In tegenstelling tot gecentraliseerde versie beheersystemen (CVCS), staat de ged
 
 ### Gecentraliseerde Werkwijze ###
 
-In gecentraliseerde systemen is er over het algemeen een enkel samenwerkingsmodel – de gecentraliseerde werkwijze. Eén centraal punt, of repository, kan code aanvaarden, en iedereen synchroniseerd hun werk daarmee. Een aantal ontwikkelaars zijn knopen – gebruikers van dat centrale punt – en synchroniseren met die plaats (zie Figuur 5-1). 
+In gecentraliseerde systemen is er over het algemeen een enkel samenwerkingsmodel – de gecentraliseerde werkwijze. Eén centraal punt, of repository, kan code aanvaarden, en iedereen synchroniseert hun werk daarmee. Een aantal ontwikkelaars zijn knopen – gebruikers van dat centrale punt – en synchroniseren met die plaats (zie Figuur 5-1). 
 
 Insert 18333fig0501.png 
 Figuur 5-1. Gecentraliseerde Werkwijze.
 
-Dit betekend dat als twee ontwikkelaars clonen van het gecentraliseerde punt en beide wijzigingen doen, de eerste ontwikkelaar zijn wijzigingen terug kan zetten zonder problemen. De tweede ontwikkelaar zal het werk van de eerste in het zijne moeten samenvoegen voordat hij het zijne kan terugzetten, om zo niet het werk van de eerste te overschrijven. Dit concept werkt zo in Git zoals het ook werkt in Subversion (of ieder ander CVCS), en dit model werkt perfekt in Git.
+Dit betekend dat als twee ontwikkelaars clonen van het gecentraliseerde punt en beide wijzigingen doen, de eerste ontwikkelaar zijn wijzigingen terug kan zetten zonder problemen. De tweede ontwikkelaar zal het werk van de eerste in het zijne moeten samenvoegen voordat hij het zijne kan terugzetten, om zo niet het werk van de eerste te overschrijven. Dit concept werkt zo in Git zoals het ook werkt in Subversion (of ieder ander CVCS), en dit model werkt perfect in Git.
 
 Als je een klein team hebt, of al vertrouwd bent met een gecentraliseerde werkwijze in je bedrijf of team, dan kun je eenvoudig doorgaan met het gebruiken van die werkwijze met Git. Stel eenvoudigweg een enkel repository in, en geef iedereen in je team terugzet toegang; Git zal gebruikers niet toestaan om elkaar te overschrijven. Als een ontwikkelaar cloned, wijzigingen maakt, en dan probeert hun wijzigingen terug te zetten terwijl een andere ontwikkelaar de zijne in de tussentijd heeft teruggezet, dan zal de server de wijzigingen van die ontwikkelaar weigeren. Ze zullen worden gemeld dat ze non-fast-forward wijzigingen proberen terug te zetten en dat ze dat niet mogen totdat ze eerst fetchen en samenvoegen.
 Deze werkwijze is voor een hoop mensen aantrekkelijk omdat het een wijze is waarmee veel mensen bekend zijn en zich op hun gemak bij voelen.
@@ -48,17 +48,17 @@ Dit is een variant op de multi-repository werkwijze. Het wordt over het algemeen
 Insert 18333fig0503.png  
 Figuur 5-3. Welwillende dictator werkwijze.
 
-Deze manier van werken komt niet vaak voor, maar kan handig zijn in hele grote projecten of in zeer hierarchische omgevingen, omdat het de projectleider (de dictator) toestaat om het meeste werk te delegeren en grote subsets van code te verzamelen op meerdere punten alvorens ze te integreren.
+Deze manier van werken komt niet vaak voor, maar kan handig zijn in hele grote projecten of in zeer hiërarchische omgevingen, omdat het de projectleider (de dictator) toestaat om het meeste werk te delegeren en grote subsets van code te verzamelen op meerdere punten alvorens ze te integreren.
 
-Dit zijn veel voorkomende werkwijzen die mogelijk zijn met een gedistribueerd systeem als Git, maar je kunt zien dat er veel variaties mogelijk zijn die passen bij jouw specifieke werkwijze. Nu dat je (naar ik hoop) in staat bent om te bepalen welke werkwijze combinatie voor jou werkt, zal ik wat specifikere voorbeelden behandelen over hoe je de hoofd rollen kunt vervullen, die in de verschillende werkwijzen voorkomen.
+Dit zijn veel voorkomende werkwijzen die mogelijk zijn met een gedistribueerd systeem als Git, maar je kunt zien dat er veel variaties mogelijk zijn die passen bij jouw specifieke werkwijze. Nu dat je (naar ik hoop) in staat bent om te bepalen welke werkwijze combinatie voor jou werkt, zal ik wat specifiekere voorbeelden behandelen over hoe je de hoofd rollen kunt vervullen, die in de verschillende werkwijzen voorkomen.
 
 ## Bijdragen aan een Project ##
 
 Je weet wat de verschillende werkwijzen zijn, en je zou een goed beeld moeten hebben van fundamenteel Git gebruik. In dit gedeelte zul je leren over een aantal voorkomende patronen voor het bijdragen aan een project.
 
-De grote moeilijkheid bij het beschrijven van dit proces is dat er een enorm aantal variaties mogelijk zijn in hoe het gebeurd. Om dat Git erg flexibel is, kunnen en zullen mensen op vele manieren samenwerken, en het is lastig om te beschrijven hoe je zou moeten bijdragen aan een project – ieder project is een beetje anders. Een aantal van de betrokken variabelen zijn aktieve bijdrage grootte, gekozen werkwijze, je commit toegang, een mogelijk de externe bijdrage methode.
+De grote moeilijkheid bij het beschrijven van dit proces is dat er een enorm aantal variaties mogelijk zijn in hoe het gebeurd. Om dat Git erg flexibel is, kunnen en zullen mensen op vele manieren samenwerken, en het is lastig om te beschrijven hoe je zou moeten bijdragen aan een project – ieder project is een beetje anders. Een aantal van de betrokken variabelen zijn actieve bijdrage grootte, gekozen werkwijze, je commit toegang, een mogelijk de externe bijdrage methode.
 
-De eerste variabele is de aktieve bijdrage grootte. Hoeveel gebruikers dragen aktief code bij aan dit project, en hoe vaak? In veel gevallen zul je twee of drie ontwikkelaars met een paar commits per dag hebben, of misschien minder voor wat slaperige projecten. Voor zeer grote bedrijven of projecten kan het aantal ontwikkelaars in de duizenden zijn, met tientallen of zelfs honderden patches die iedere dag binnenkomen. Dit is belangrijk omdat met meer en meer ontwikkelaars, je meer en meer problemen tegenkomt met het zeker zijn dat code netjes toegepast kan worden of eenvoudig samengevoegd kan worden. Wijzigingen die je toevoegd kunnen verouderd of zwaar beschadigd raken door werk dat samengevoegd is terwijl je er aan het werken was of terwijl je wijzigingen in de wacht stonden voor goedkeuring of toepassing. Hoe kun je je code consequent bij de tijd en je patches geldig houden?
+De eerste variabele is de actieve bijdrage grootte. Hoeveel gebruikers dragen actief code bij aan dit project, en hoe vaak? In veel gevallen zul je twee of drie ontwikkelaars met een paar commits per dag hebben, of misschien minder voor wat slaperige projecten. Voor zeer grote bedrijven of projecten kan het aantal ontwikkelaars in de duizenden zijn, met tientallen of zelfs honderden patches die iedere dag binnenkomen. Dit is belangrijk omdat met meer en meer ontwikkelaars, je meer en meer problemen tegenkomt met het zeker zijn dat code netjes toegepast kan worden of eenvoudig samengevoegd kan worden. Wijzigingen die je toevoegt kunnen verouderd of zwaar beschadigd raken door werk dat samengevoegd is terwijl je er aan het werken was of terwijl je wijzigingen in de wacht stonden voor goedkeuring of toepassing. Hoe kun je je code consequent bij de tijd en je patches geldig houden?
 
 De volgende variabele is de gebruikte werkwijze in je project. Is het gecentraliseerd, waarbij iedere ontwikkelaar gelijkwaardige schrijftoegang heeft tot de hoofd codebasis? Heeft het project een eigenaar of integrator die alle patches nakijkt? Zijn alle patches gereviewed en goedgekeurd? Ben jij betrokken bij dat proces? Is er een luitenanten systeem in werking, en moet je je werk eerst bij hen inleveren?
 
@@ -82,14 +82,14 @@ Als eerste wil je geen witruimte fouten indienen. Git geeft je een eenvoudige ma
 
 Als je dat commando uitvoert alvorens te committen, kun je al zien of je op het punt staat witruimte problemen te committen die andere ontwikkelaars boos kunnen maken.
 
-Daarna, probeer om iedere van commit een logische set wijzigingen te maken. Probeer, als het je lukt, om je wijzigingen verteerbaar te maken – ga niet het hele weekend zitten coderen op vijf verschillende problemen om dat vervolgens op maandag als een gigantische commit in te dienen. Zels als je gedurende het weekend niet commit, gebruik dan het staging gebied op maandag om je werk in ten minste één commit per probleem op te splitsen, met een bruikbaar bericht per commit. Als een paar van de wijzigingen één bestand veranderen, probeer dan `git add --patch` te gebruiken om bestanden gedeeltelijk te stagen (wordt in detail behandeld in Hoofdstuk 6). Het snapshot van het project is gelijk of je nu één commit doet of vijf, zolang alle wijzigingen maar toegevoegd zijn op een bepaald punt, dus probeer om het je mede-ontwikkelaars makkelijk te maken als ze je wijzigingen moeten bekijken. Deze aanpak maakt het ook makkelijker om één wijziging op te halen of terug te draaien, mocht dat later nodig zijn. Hoofdstuk 6 beschrijft een aantal handige Git trucs om geschiedenis te herschrijven en bestanden interactief te stagen – gebruik deze applicaties om te helpen een schone en begrijpelijke historie op te bouwen.
+Daarna, probeer om iedere van commit een logische set wijzigingen te maken. Probeer, als het je lukt, om je wijzigingen verteerbaar te maken – ga niet het hele weekend zitten coderen op vijf verschillende problemen om dat vervolgens op maandag als een gigantische commit in te dienen. Zelfs als je gedurende het weekend niet commit, gebruik dan het staging gebied op maandag om je werk in ten minste één commit per probleem op te splitsen, met een bruikbaar bericht per commit. Als een paar van de wijzigingen één bestand veranderen, probeer dan `git add --patch` te gebruiken om bestanden gedeeltelijk te stagen (wordt in detail behandeld in Hoofdstuk 6). Het snapshot van het project is gelijk of je nu één commit doet of vijf, zolang alle wijzigingen maar toegevoegd zijn op een bepaald punt, dus probeer om het je mede-ontwikkelaars makkelijk te maken als ze je wijzigingen moeten bekijken. Deze aanpak maakt het ook makkelijker om één wijziging op te halen of terug te draaien, mocht dat later nodig zijn. Hoofdstuk 6 beschrijft een aantal handige Git trucs om geschiedenis te herschrijven en bestanden interactief te stagen – gebruik deze applicaties om te helpen een schone en begrijpelijke historie op te bouwen.
 
-Het laatste ding om in gedachten te houden is het commit bericht. Als je er een gewoonte van maakt om een goede kwaliteit commit berichten aan te maken, dan maakt dat het gebruik van en samenwerken in Git een stuk eenvoudiger. Als een algemen regel, zouden je berichten moeten beginnen met een enkele regel, die niet langer is dan 50 karakters en die de set wijzigingen beknopt omschrijft, gevolgd door een lege regel, gevolgd door een meer gedetaileerde uitleg. Het Git project vereist dat de meer gedetaileerde omschrijving ook je motivatie voor de verandering bevat, en de nieuwe implementatie tegen het oude gedrag afzet – dit is een goede richtlijn om te volgen. Het is ook een goed idee om de gebiedende wijs te gebruiken in deze berichten. Met andere woorden, gebruik commando's. In plaats van "Ik heb testen toegevoegd voor" of "Testen toegevoegd voor" gebruik je "Voeg testen toe voor".
+Het laatste ding om in gedachten te houden is het commit bericht. Als je er een gewoonte van maakt om een goede kwaliteit commit berichten aan te maken, dan maakt dat het gebruik van en samenwerken in Git een stuk eenvoudiger. Als een algemene regel, zouden je berichten moeten beginnen met een enkele regel, die niet langer is dan 50 karakters en die de set wijzigingen beknopt omschrijft, gevolgd door een lege regel, gevolgd door een meer gedetailleerde uitleg. Het Git project vereist dat de meer gedetailleerde omschrijving ook je motivatie voor de verandering bevat, en de nieuwe implementatie tegen het oude gedrag afzet – dit is een goede richtlijn om te volgen. Het is ook een goed idee om de gebiedende wijs te gebruiken in deze berichten. Met andere woorden, gebruik commando's. In plaats van "Ik heb testen toegevoegd voor" of "Testen toegevoegd voor" gebruik je "Voeg testen toe voor".
 Hier is een sjabloon dat origineel geschreven is door Tim Pope op tpope.net:
 
 	Kort (50 karakters of minder) samenvatting van wijzigingen
 
-	Gededailleerdere tekst uitleg, als nodig. Laat het in ongeveer 72
+	Gedetailleerdere tekst uitleg, indien nodig. Laat het in ongeveer 72
 	karakters afbreken. In sommige contexten, wordt de eerste regel
 	behandeld als het onderwerp van een email en de rest als inhoud.
 	De lege regel die de samenvatting scheidt van de inhoud is van
@@ -102,15 +102,15 @@ Hier is een sjabloon dat origineel geschreven is door Tim Pope op tpope.net:
 
 	 - Typisch wordt een streepje of sterretje gebruikt als punt, voorafgegaan
 	   door een enkele spatie, met ertussen lege regels, maar de conventies
-	   variëeren hierin.
+	   variëren hierin.
 
-Als al je commit berichten er zo uit zien, dan zullen de dingen een stuk eenvoudiger zijn voor jou en de ontwikkelaars waar je mee werkt. Het Git project heeft goed geformateerde commit berichten – ik raad je aan om `git log --no-merges` uit te voeren om te zien hoe een goed geformatteerde project-commit historie eruit ziet.
+Als al je commit berichten er zo uit zien, dan zullen de dingen een stuk eenvoudiger zijn voor jou en de ontwikkelaars waar je mee werkt. Het Git project heeft goed geformatteerde commit berichten – ik raad je aan om `git log --no-merges` uit te voeren om te zien hoe een goed geformatteerde project-commit historie eruit ziet.
 
 In de volgende voorbeelden, en verder door de rest van dit boek, zal ik omwille van bondigheid de berichten niet zo netjes als dit formatteren; in plaats daarvan gebruik ik de `-m` optie voor `git commit`. Doe wat ik zeg, niet wat ik doe.
 
 ### Besloten Klein Team ###
 
-De eenvoudigste opzet die je waarschijnlijk zult tegenkomen is een besloten project met één of twee ondere ontwikkelaars. Met besloten bedoel ik gesloten broncode – zonder leestoegang voor de buitenwereld. Jij en de andere ontwikkelaars hebben allemaal terugzet toegang op het repository.
+De eenvoudigste opzet die je waarschijnlijk zult tegenkomen is een besloten project met één of twee andere ontwikkelaars. Met besloten bedoel ik gesloten broncode – zonder leestoegang voor de buitenwereld. Jij en de andere ontwikkelaars hebben allemaal terugzet toegang op het repository.
 
 In deze omgeving kun je een werkwijze aanhouden die vergelijkbaar is met wat je zou doen als je Subversion of een andere gecentraliseerd systeem zou gebruiken. Je hebt nog steeds de voordelen van zaken als offline committen en veel eenvoudiger branchen en samenvoegen, maar de werkwijze kan erg vergelijkbaar zijn; het grote verschil is dat het samenvoegen aan de client-kant gebeurt tijdens het committen in plaats van aan de server-kant.
 Laten we eens kijken hoe het er uit zou kunnen zien als twee ontwikkelaars samen beginnen te werken met een gedeeld repository. De eerste ontwikkelaar, John, cloned het repository, maakt een wijziging, en commit lokaal. (Ik vervang de protocol berichten met `...` in deze voorbeelden om ze iets in te korten.)
@@ -163,7 +163,7 @@ John mag niet terugzetten omdat Jessica in de tussentijd teruggezet heeft. Dit i
 Op dit punt ziet John's lokale repository er ongeveer uit zoals Figuur 5-4.
 
 Insert 18333fig0504.png 
-Figuur 5-4. John’s initiele repository.
+Figuur 5-4. John’s initiële repository.
 
 John heeft een referentie naar de wijzigingen die Jessica teruggezet heeft, maar hij moet ze samenvoegen met zijn eigen werk voordat hij het terug mag zetten:
 
@@ -192,7 +192,7 @@ Figuur 5-6. John’s history na teruggezet te hebben op de origin van de server.
 In de tussentijd heeft Jessica gewerkt op een onderwerp branch. Ze heeft een onderwerp branch genaamd `issue54` aangemaakt en daar drie commits op gedaan. Ze heeft John's wijzigingen nog niet opgehaald, dus haar commit historie ziet er uit als Figuur 5-7.
 
 Insert 18333fig0507.png 
-Figuur 5-7. Jessica’s initiele commit historie.
+Figuur 5-7. Jessica’s initiële commit historie.
 
 Jessica wil met John synchroniseren, dus ze haalt de wijzigingen op:
 
@@ -231,7 +231,7 @@ Ze kan of `origin/master` of `issue54` als eerste samenvoegen – ze zijn beide 
 	 lib/simplegit.rb |    6 +++++-
 	 2 files changed, 6 insertions(+), 1 deletions(-)
 
-Er doen zich geen problemen voor; zoals je kunt zien was het een eenvoudige fast-forware. Nu voegt Jessica John's werk in (`origin/master`):
+Er doen zich geen problemen voor; zoals je kunt zien was het een eenvoudige fast-forward. Nu voegt Jessica John's werk in (`origin/master`):
 
 	$ git merge origin/master
 	Auto-merging lib/simplegit.rb
@@ -277,7 +277,7 @@ Laten we Jessica's werkwijze volgen terwijl ze aan haar twee functies werkt, in 
 	[featureA 3300904] add limit to log function
 	 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Op dit punt, moet ze haar werk delen met John, dus ze zet haar commits op de `featureA` branch terug naar de server. Jessica heeft geen terugzet toegang op de `master` branch – alleen de integratoren hebben dat – dus ze moet naar een andere branch terugzetten om samen te kunnen werken met John:
+Op dit punt, moet ze haar werk delen met John, dus ze zet haar commits op de `featureA` branch terug naar de server. Jessica heeft geen terugzet toegang op de `master` branch – alleen de integrators hebben dat – dus ze moet naar een andere branch terugzetten om samen te kunnen werken met John:
 
 	$ git push origin featureA
 	...
@@ -305,7 +305,7 @@ Nu doet Jessica een paar commits op de `featureB` branch:
 Jessica's repository ziet eruit als Figuur 5-12.
 
 Insert 18333fig0512.png 
-Figuur 5-12. Jessica’s initiele commit historie.
+Figuur 5-12. Jessica’s initiële commit historie.
 
 Ze is klaar om haar werk terug te zetten, maar ze krijgt een e-mail van Josie dat een branch met wat initieel werk erin al teruggezet is naar de server als `featureBee`. Jessica moet die wijzigingen eerst samenvoegen met haar eigen voordat ze terug kan zetten naar de server. Ze kan dan Josie's wijzigingen ophalen met `git fetch`:
 
@@ -329,9 +329,9 @@ Er is wel een klein probleem – ze moet het samengevoegde werk in haar `feature
 	To jessica@githost:simplegit.git
 	   fba9af8..cd685d1  featureB -> featureBee
 
-Dit wordt een _refspec_ genoemd. Zie Hoofdstuk 9 voor een gedaileerdere discussie van Git refspecs en de verschillende dingen die je met ze kan doen.
+Dit wordt een _refspec_ genoemd. Zie Hoofdstuk 9 voor een gedetailleerdere discussie van Git refspecs en de verschillende dingen die je met ze kan doen.
 
-Vervolgens e-mailed John naar Jessica om te zeggen dat hij wat wijzigingen naar de `featureA` branch teruggezet heeft, en om haar te vragen die te verifieren. Ze voert een `git fetch` uit om die wijzigingen op te halen:
+Vervolgens e-mailed John naar Jessica om te zeggen dat hij wat wijzigingen naar de `featureA` branch teruggezet heeft, en om haar te vragen die te verifiëren. Ze voert een `git fetch` uit om die wijzigingen op te halen:
 
 	$ git fetch origin
 	...
@@ -378,7 +378,7 @@ Jessica, Josie en John informeren de integrators nu dat de `featureA` en feature
 Insert 18333fig0514.png 
 Figuur 5-14. Jessica’s historie na het samenvoegen van allebei haar onderwerp branches.
 
-Veel groepen schakelen om naar Git voor deze mogelijkheid om meerdere teams in paralleel te kunnen laten werken, waarbij de verschillende lijnen van werk laat in het proces samengevoegd worden. De mogelijkheid van kleinere subgroepen of een team om samen te werken via remote branches zonder het betrekken of dwarsliggen van het hele team is een enorm voordeel van Git. De volgorde van de werkwijze die je hier zag is ongeveer zoals Figuur 5-15.
+Veel groepen schakelen om naar Git voor deze mogelijkheid om meerdere teams in parallel te kunnen laten werken, waarbij de verschillende lijnen van werk laat in het proces samengevoegd worden. De mogelijkheid van kleinere subgroepen of een team om samen te werken via remote branches zonder het betrekken of dwarsliggen van het hele team is een enorm voordeel van Git. De volgorde van de werkwijze die je hier zag is ongeveer zoals Figuur 5-15.
 
 Insert 18333fig0515.png 
 Figuur 5-15. Basale volgorde van de werkwijze van dit aangestuurde team.
@@ -403,7 +403,7 @@ Als je werk op de branch af is, en je klaar bent om het bij te dragen aan de beh
 
 	$ git remote add myfork (url)
 
-Je moet je werk hier naar terugzetten. Het is het makkelijkts om de remote branch waar je op zit te werken terug te zetten naar je repository, in plaats van het samenvoegen in je master branch en die terug te zetten. De reden is dat als het werk niet wordt geaccepteerd of ge-cherry picked, je je master branch niet hoeft terug te draaien. Als de beheerders je werk samenvoegen, rebasen of cherry picken, dan krijg je het uiteindelijk toch terug door hun repository binnen te halen:
+Je moet je werk hier naar terugzetten. Het is het gemakkelijkste om de remote branch waar je op zit te werken terug te zetten naar je repository, in plaats van het samenvoegen in je master branch en die terug te zetten. De reden is dat als het werk niet wordt geaccepteert of ge-cherry picked, je je master branch niet hoeft terug te draaien. Als de beheerders je werk samenvoegen, rebasen of cherry picken, dan krijg je het uiteindelijk toch terug door hun repository binnen te halen:
 
 	$ git push myfork featureA
 
@@ -427,7 +427,7 @@ Het `request-pull` commando accepteerd de basis branch waarin je je onderwerp br
 	 lib/simplegit.rb |   10 +++++++++-
 	 1 files changed, 9 insertions(+), 1 deletions(-)
 
-De uitvoer kan naar de beheerder gestuurd worden – het verteld ze waar het werk vanaf gebranched is, vat de commits samen, en verteld waar ze dit werk vandaan kunnen halen.
+De uitvoer kan naar de beheerder gestuurd worden – het vertelt ze waar het werk vanaf gebranched is, vat de commits samen, en vertelt waar ze dit werk vandaan kunnen halen.
 
 Bij een project waarvan je niet de beheerder bent, is het over het algemeen eenvoudiger om een branch zoals `master` altijd de `origin/master` te laten volgen, en je werk te doen in onderwerp branches die je eenvoudig weg kunt gooien als ze geweigerd worden. Als je je werk thema's gescheiden hebt in onderwerp branches maakt dat het ook eenvoudiger voor jou om je werk te rebasen als de punt van het hoof repository in de tussentijd verschoven is en je commits niet langer netjes toegepast kunnen worden. Bijvoorbeeld, als je een tweede onderwerp wil bijdragen aan een project, ga dan niet verder werken op de onderwerp branch die je zojuist teruggezet hebt – begin opnieuw vanaf de `master` branch van het hoofd repository:
 
@@ -464,7 +464,7 @@ Laten we eens kijken naar nog een mogelijk scenario: de beheerder heeft je werk 
 	$ git commit
 	$ git push myfork featureBv2
 
-De `--squash` optie pakt al het werk op de samengevoegde branch en perst dat samen in één non-merge commit bovenop de branch waar je op zit. De `--no-commit` optie verteld Git dat hij niet automatisch een commit moet vastleggen. Dit staat je toe om alle wijzigingen van een andere branch te introduceren en dan meer wijzigingen te doen, alvorens de commit vast te leggen.
+De `--squash` optie pakt al het werk op de samengevoegde branch en perst dat samen in één non-merge commit bovenop de branch waar je op zit. De `--no-commit` optie vertelt Git dat hij niet automatisch een commit moet vastleggen. Dit staat je toe om alle wijzigingen van een andere branch te introduceren en dan meer wijzigingen te doen, alvorens de commit vast te leggen.
 
 Nu kun je de beheerder een bericht sturen dat je de gevraagde wijzigingen gemaakt hebt en dat ze die wijzigingen kunnen vinden in je `featureBv2` branch (zie Figuur 5-18).
 
@@ -489,7 +489,7 @@ Nu heb je twee commits die je wil sturen naar de maillijst. Je gebruikt `git for
 	0001-add-limit-to-log-function.patch
 	0002-changed-log-output-to-30-from-25.patch
 
-Het `format-patch` commando voert de namen uit van de patch bestanden die het maakt. De `-M` optie verteld Git te kijken naar hernoemingen. De bestanden komen er uiteindelijk zo uit te zien:
+Het `format-patch` commando voert de namen uit van de patch bestanden die het maakt. De `-M` optie vertelt Git te kijken naar hernoemingen. De bestanden komen er uiteindelijk zo uit te zien:
 
 	$ cat 0001-add-limit-to-log-function.patch 
 	From 330090432754092d704da8e76ca5c05c198e71a8 Mon Sep 17 00:00:00 2001
@@ -521,7 +521,7 @@ Het `format-patch` commando voert de namen uit van de patch bestanden die het ma
 
 Je kunt deze patch bestanden ook aanpassen om meer informatie voor de maillijst toe te voegen, die je niet in het commit bericht wil laten zien. Als je tekst toevoegt tussen de `--` regel en het begin van de patch (de `lib/simplegit.rb` regel), dan kunnen ontwikkelaars dit lezen; maar tijdens het toepassen van de patch wordt dit weggelaten.
 
-Om dit te e-mailen naar een maillijst, kun je het bestand in je e-mail applicatie plakken of het sturen via een commandoregel programma. Het plakken van de tekst veroorzaakt vaak formaat problemen, in het bijzonder bij "slimmere" clients die geen harde returns en andere witruimte juist behouden. Gelukkig levert Git een applicatie die je helpt om juist geformatteerde patches via IMAP te versturen, wat makkelijker voor je kan zijn. Ik zal demonstreren hoe je een patch via Gmail stuurt, wat de e-mail applicatie is die ik gebruik; je kunt gedetaileerde instrukties voor een aantal mail programma's vinden aan het eind van het voornoemde `Documentation/SubmittingPatches` bestand in de Git broncode.
+Om dit te e-mailen naar een maillijst, kun je het bestand in je e-mail applicatie plakken of het sturen via een commandoregel programma. Het plakken van de tekst veroorzaakt vaak formaat problemen, in het bijzonder bij "slimmere" clients die geen harde returns en andere witruimte juist behouden. Gelukkig levert Git een applicatie die je helpt om juist geformatteerde patches via IMAP te versturen, wat makkelijker voor je kan zijn. Ik zal demonstreren hoe je een patch via Gmail stuurt, wat de e-mail applicatie is die ik gebruik; je kunt gedetailleerde instructies voor een aantal mail programma's vinden aan het eind van het voornoemde `Documentation/SubmittingPatches` bestand in de Git broncode.
 
 Eerst moet je de imap sectie in je `~/.gitconfig` bestand instellen. Je kunt iedere waarde apart instellen met een serie `git config` commando's, of je kunt ze handmatig toevoegen; maar aan het einde moet je config bestand er ongeveer zo uitzien:
 
@@ -567,9 +567,9 @@ Op dit punt zou je in staat moeten zijn om naar je Drafts map te gaan, het To ve
 
 Dit gedeelte heeft een aantal vaak voorkomende werkwijzen behandeld, om om te gaan met een aantal zeer verschillende typen Git projecten die je waarschijnlijk zult tegen komen en een aantal nieuwe programma's geïntroduceerd, die je helpen om dit proces te beheren. Vervolgens zul je zien hoe je aan de andere kant van de medaille werkt: een Git project beheren. Je zult leren hoe een welwillende dictator of integratie manager te zijn.
 
-## Maintaining a Project ##
+## Onderhouden van een Project ##
 
-In addition to knowing how to effectively contribute to a project, you’ll likely need to know how to maintain one. This can consist of accepting and applying patches generated via `format-patch` and e-mailed to you, or integrating changes in remote branches for repositories you’ve added as remotes to your project. Whether you maintain a canonical repository or want to help by verifying or approving patches, you need to know how to accept work in a way that is clearest for other contributors and sustainable by you over the long run.
+Naast weten hoe je effectief kan bijdragen aan een project, zal je waarschijnlijk ook moeten weten hoe je een project moet onderhouden. Dit kan onder andere inhouden dat je ge-e-mailde patches die gegenereerd zijn via `format-patch` zal moeten aanvaarden en toepassen, of het integreren van wijzigingen in remote branches die je als remote hebt toegevoegd aan je project. Of je nu een hoofd-repository onderhoudt of wilt meehelpen door patches te verifiëren of goed te keuren, je zal moeten weten hoe werk te accepteren op een manier die het duidelijkst is voor andere bijdragers en op termijn duurzaam is voor jou.
 
 ### Werken in Onderwerp Branches ###
 
@@ -684,7 +684,7 @@ Als alle patches voor je onderwerp branch zijn toegepast en gecommit zijn op je 
 
 ### Remote Branches Bekijken ###
 
-Als je bijdrage van een Git gebruiker komt, die hun eigen repository ingesteeld heeft, een aantal patches daarin teruggezet heeft, en jou de URL naar de repository gestuurd heeft en de naam van de remote branch waarin de wijzigingen zitten, dan kun je ze toevoegen als een remote en de samenvoegingen lokaal doen.
+Als je bijdrage van een Git gebruiker komt, die hun eigen repository ingesteld heeft, een aantal patches daarin teruggezet heeft, en jou de URL naar de repository gestuurd heeft en de naam van de remote branch waarin de wijzigingen zitten, dan kun je ze toevoegen als een remote en de samenvoegingen lokaal doen.
 
 Bijvoorbeeld, als Jessica je een e-mail stuurt waarin staat dat ze een mooie nieuw eigenschap in de `ruby-client` branch van haar repository heeft, kun je het testen door de remote toe te voegen en die branch lokaal te bekijken:
 
@@ -694,11 +694,11 @@ Bijvoorbeeld, als Jessica je een e-mail stuurt waarin staat dat ze een mooie nie
 
 Als ze je later opnieuw e-mailed met een andere branch die een andere mooie eigenschap bevat, dan kun je die ophalen en bekijken omdat je de remote al ingesteld hebt.
 
-Dit is erg handig als je consitent met een persoon werkt. Als iemand een enkele patch eens in de zoveel tijd bij te dragen heeft, dan is het accepteren per e-mail miscchien minder tijdrovend dan eisen dat iedereen hun eigen server moet draaien en doorlopend remotes toevoegen en verwijderen om een paar patches te krijgen. Je zult waarschijnlijk ook honderden remotes hebben, elk voor iemand die maar een patch of twee bijdraagt. Maar, scripts en gehoste diensten maken dit misschien makkelijker – het hangt veel af van hoe jij ontwikkeld en hoe je bijdragers ontwikkelen.
+Dit is het handigste als je consistent met een persoon werkt. Als iemand een enkele patch eens in de zoveel tijd bij te dragen heeft, dan is het accepteren per e-mail misschien minder tijdrovend dan eisen dat iedereen hun eigen server moet draaien en doorlopend remotes toevoegen en verwijderen om een paar patches te krijgen. Je zult waarschijnlijk ook honderden remotes hebben, elk voor iemand die maar een patch of twee bijdraagt. Maar, scripts en gehoste diensten maken dit misschien makkelijker – het hangt veel af van hoe jij ontwikkeld en hoe je bijdragers ontwikkelen.
 
 Het andere voordeel van deze aanpak is dat je de historie van de commits ook krijgt. Alhoewel je misschien geldige samenvoeg problemen hebt, weet je waar in je historie hun werk is gebaseerd; een goede drieweg samenvoeging is de standaard in plaats van een `-3` te moeten meegeven en hopen dat de patch gegenereerd was van een publieke commit waar je toegang toe hebt.
 
-Als je niet consitent met een persoon werkt, maar toch op deze manier van hen wilt ophalen, dan kun je de URL van het remote repository geven aan het `git pull` commando. Dit haalt eenmalig  op en bewaart de URL niet als een remote referentie:
+Als je niet consistent met een persoon werkt, maar toch op deze manier van hen wilt ophalen, dan kun je de URL van het remote repository geven aan het `git pull` commando. Dit haalt eenmalig  op en bewaart de URL niet als een remote referentie:
 
 	$ git pull git://github.com/onetimeguy/project.git
 	From git://github.com/onetimeguy/project
@@ -707,7 +707,7 @@ Als je niet consitent met een persoon werkt, maar toch op deze manier van hen wi
 
 ### Bepalen wat Geïntroduceerd wordt ###
 
-Nu heb je een onderwerp branch dat bijgedragen werk bevat. Op dit punt kun je bepalen wat je er mee wilt doen. Deze sectie bezoekt een paar commando's opnieuw zodat je kunt zien hoe je ze kunt gebruiken om precies te reviewen wat je zult indroduceren als je dit samenvoegt in je hoofd branch.
+Nu heb je een onderwerp branch dat bijgedragen werk bevat. Op dit punt kun je bepalen wat je er mee wilt doen. Deze sectie bezoekt een paar commando's opnieuw zodat je kunt zien hoe je ze kunt gebruiken om precies te reviewen wat je zult introduceren als je dit samenvoegt in je hoofd branch.
 
 Het is vaak behulpzaam om een review te krijgen van alle commits die in deze branch zitten, maar die niet in je master branch zitten. Je kunt commits weglaten in de master branch door de `--not` optie mee te geven voor de branch naam. Bijvoorbeeld, als je bijdrager je twee patches stuurt en je wil een branch genaamd `contrib` maken en die patches daar toepassen, dan kun je dit uitvoeren:
 
@@ -842,15 +842,15 @@ Nu dat je de inhoud van je sleutel in Git hebt, kun je een tag aanmaken die dire
 
 	$ git tag -a maintainer-pgp-pub 659ef797d181633c87ec71ac3f9ba29fe5775b92
 
-Als je `git push --tags` uitvoert, zal de `maintainer-pgp-pub` tag met iedereen gedeeld worden. Als iemand een tag wil verifieren, dan kunnen ze je PGP sleutel direct importeren door de blob direct uit de gegevensbank te halen en het in GPG te importeren:
+Als je `git push --tags` uitvoert, zal de `maintainer-pgp-pub` tag met iedereen gedeeld worden. Als iemand een tag wil verifiëren, dan kunnen ze je PGP sleutel direct importeren door de blob direct uit de gegevensbank te halen en het in GPG te importeren:
 
 	$ git show maintainer-pgp-pub | gpg --import
 
-Ze kunnen die sleutel gebruiken om als je gesigneerde tags te verifieren. Als je de instructies in het tag bericht zet, dan zal `git show <tag>` je eindgebruikers meer specifieke instructies geven over tag verificatie.
+Ze kunnen die sleutel gebruiken om als je gesigneerde tags te verifiëren. Als je de instructies in het tag bericht zet, dan zal `git show <tag>` je eindgebruikers meer specifieke instructies geven over tag verificatie.
 
 ### Een Bouw Nummer Genereren ###
 
-Omdat Git geen monotone oplopende nummers heeft zoals 'v123' of iets gelijkwaardigs om bij iedere commit mee te gaan, zul je als je een voor mensen leesbare naam wilt hebben bij een commit, `git describe` kunnen uitvoeren op die commit. Git geeft je de naam van de dichtstbijzijnde tag met het aantal commits bovenop die dag en een gedeeltelijke SHA-1 waarde van de commit die je omschrijft:
+Omdat Git geen monotone oplopende nummers heeft zoals 'v123' of iets gelijkwaardig om bij iedere commit mee te gaan, zul je als je een voor mensen leesbare naam wilt hebben bij een commit, `git describe` kunnen uitvoeren op die commit. Git geeft je de naam van de dichtstbijzijnde tag met het aantal commits bovenop die dag en een gedeeltelijke SHA-1 waarde van de commit die je omschrijft:
 
 	$ git describe master
 	v1.6.2-rc1-20-g8c5b85c
@@ -873,7 +873,7 @@ Als iemand die tarball opent, dan krijgen ze ze laatste snapshot van je project 
 
 Je hebt nu een fijne tarball en een zip archief van je project vrijgave, die je kunt uploaden naar je website of naar mensen kunt e-mailen.
 
-### Het Shortlog ###
+### De Shortlog ###
 
 Het is tijd geworden om je maillijst van mensen die willen weten wat er gebeurt in je project te e-mailen. Een fijne manier om een soort van veranderingslog te krijgen van wat er is toegevoegd in je project sinds je laatste vrijgave of e-mail is om het `git shortlog` commando te gebruiken. Het vat alle commits samen in de reeks die je het geeft; bijvoorbeeld, het volgende geeft je een samenvatting van alle commits sinds je vorige vrijgave, als je laatste vrijgave v1.0.1 heette:
 
