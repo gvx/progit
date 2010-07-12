@@ -244,15 +244,15 @@ Als je alle interne verwijzingen volgt, krijg je een object-graaf die er uitzien
 Insert 18333fig0903.png 
 Figuur 9-3. Alle objecten in je Gitmap.
 
-### Object Opslag ###
+### Opslag van Objecten ###
 
-Ik vertelde eerder dat er een kop wordt opgeslagen bij de inhoud. Laten we eens een minuutje kijken naar hoe Git zijn objecten opslaat. Je zult zien hoe je interactief een blob object opslaat – in dit geval de tekst "what is up, doc?" – in de Ruby scripttaal. Je kunt de interactieve Ruby modus starten met het `irb` commando:
+Ik vertelde eerder dat er een kop wordt opgeslagen bij de inhoud. Laten we eens een minuutje kijken naar hoe Git zijn objecten opslaat. Je zult zien hoe je interactief een blob object opslaat – in dit geval de tekst "what is up, doc?" – in de scripttaal Ruby. Je kunt de interactieve modus van Ruby starten met het `irb`-commando:
 
 	$ irb
 	>> content = "what is up, doc?"
 	=> "what is up, doc?"
 
-Git construeert een kop, die begint met het type van het object, in dit geval een blob. Daarna voegt het een spatie toe, gevolgd door de grootte van de inhoud en als laatste een null byte:
+Git construeert een kop, die begint met het type van het object, in dit geval een blob. Daarna voegt het een spatie toe, gevolgd door de grootte van de inhoud en als laatste een nullbyte:
 
 	>> header = "blob #{content.length}\0"
 	=> "blob 16\000"
@@ -266,14 +266,14 @@ Git voegt de kop en de originele inhoud samen, en berekent vervolgens de SHA-1 c
 	>> sha1 = Digest::SHA1.hexdigest(store)
 	=> "bd9dbf5aae1a3862dd1526723246b20206e5fc37"
 
-Git comprimeert de nieuwe inhoud met zlib, wat je in Ruby kunt doen met de zlib bibliotheek. Als eerste moet je de bibliotheek opnemen, en dan `Zlib::Deflate.deflate()' op de inhoud uitvoeren:
+Git comprimeert de nieuwe inhoud met zlib, wat je in Ruby kunt doen met de zlib-bibliotheek. Als eerste moet je de bibliotheek opnemen, en dan `Zlib::Deflate.deflate()' op de inhoud uitvoeren:
 
 	>> require 'zlib'
 	=> true
 	>> zlib_content = Zlib::Deflate.deflate(store)
 	=> "x\234K\312\311OR04c(\317H,Q\310,V(-\320QH\311O\266\a\000_\034\a\235"
 
-Als laatste schrijf je je zlib-gecomprimeerde inhoud naar een object op de schijf. Je zult het pad van het object dat je wilt wegschrijven moeten bepalen (de eerste twee karakters van de SHA-1 waarde zijn de submap naam, en de laatste 38 karakters zijn de bestandsnaam in die map). In Ruby kun je de `FileUtils.mkdir_p()` functie gebruiken om de submap aan te maken als hij nog niet bestaat. Daarna open je het bestand met `File.open()' en schrijft de eerder met zlib gecomprimeerde inhoud in het bestand met een aanroep van `write()` op het resulterende bestands-aangrijpingspunt.
+Als laatste schrijf je je zlib-gecomprimeerde inhoud naar een object op de schijf. Je zult het pad van het object dat je wilt wegschrijven moeten bepalen (de eerste twee karakters van de SHA-1 waarde zijn de naam van de submap, en de laatste 38 karakters zijn de bestandsnaam in die map). In Ruby kun je de `FileUtils.mkdir_p()`-functie gebruiken om de submap aan te maken als hij nog niet bestaat. Daarna open je het bestand met `File.open()` en schrijft de eerder met zlib gecomprimeerde inhoud in het bestand met een aanroep van `write()` op het resulterende bestands-aangrijpingspunt.
 
 	>> path = '.git/objects/' + sha1[0,2] + '/' + sha1[2,38]
 	=> ".git/objects/bd/9dbf5aae1a3862dd1526723246b20206e5fc37"
@@ -284,7 +284,7 @@ Als laatste schrijf je je zlib-gecomprimeerde inhoud naar een object op de schij
 	>> File.open(path, 'w') { |f| f.write zlib_content }
 	=> 32
 
-Dat is het – je hebt nu een geldig Git blob object aangemaakt. Alle Git objecten zijn op dezelfde manier opgeslagen, alleen de types verschillen – in plaats van de tekst blob, zal de kop beginnen met commit of tree. En alhoewel de blob inhoud vrijwel alles kan zijn, hebben de commit en boom inhoud een zeer specificiek formaat.
+Dat is het – je hebt nu een geldig Git-blob-object aangemaakt. Alle Git-objecten zijn op dezelfde manier opgeslagen, alleen de types verschillen – in plaats van de tekst blob, zal de kop beginnen met commit of tree. En alhoewel de blobinhoud vrijwel alles kan zijn, hebben de inhoud van een commit en een boom een zeer specificiek formaat.
 
 ## Git Referenties ##
 
