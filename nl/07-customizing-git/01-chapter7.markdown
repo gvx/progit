@@ -15,11 +15,11 @@ Je zag wat eenvoudige Git configuratie details in het eerste hoofdstuk, maar ik 
 
 De volgende plaats waar Git kijkt is het `~/.gitconfig` bestand, wat specifiek is voor iedere gebruiker. Je kunt er voor zorgen dat Git naar dit bestand leest en schrijft door de `--global` optie mee te geven.
 
-Als laatste kijkt Git naar configuratie waarden in het config bestand in de Git map (`.git/config`) of welk repository dat je op dat moment gebruikt. Deze waarden zijn specifiek voor dat ene repository. Ieder nivo overschrijft de waarden in het vorige nivo, dus waarden in `.git/config` gaan boven die in `/etc/gitconfig`, bijvoorbeeld. Je kunt die waarden ook instellen door het bestand handmatig aan te passen en de correcte syntax in te voegen, maar het is over het algemeen makkelijk m het `git config` commando uit te voeren.
+Als laatste kijkt Git naar configuratie waarden in het config bestand in de Git map (`.git/config`) of welk repository dat je op dat moment gebruikt. Deze waarden zijn specifiek voor dat ene repository. Ieder niveau overschrijft de waarden in het vorige niveau, dus waarden in `.git/config` gaan boven die in `/etc/gitconfig`, bijvoorbeeld. Je kunt die waarden ook instellen door het bestand handmatig aan te passen en de correcte syntax in te voegen, maar het is over het algemeen makkelijk m het `git config` commando uit te voeren.
 
 ### Basis Client Configuratie ###
 
-De configuratie opties die herkent worden door Git vallen binnen twee categorien: de client kant en de server kant. De meerderheid van de opties zijn voor de client kant – de configuratie van je persoonlijke voorkeuren. Alhoewel er massa's opties beschikbaar zijn, zal ik alleen een paar behandelen die ofwel veelgebruikt zijn of je werkwijze significant kunnen beinvloeden. Veel opties zijn alleen bruikbaar in randgevallen waar ik hier niet naar kijk. Als je een lijst van alle opties wil zien, die jou versie van Git herkent kun je dit uitvoeren
+De configuratie opties die herkent worden door Git vallen binnen twee categorieën: de client kant en de server kant. De meerderheid van de opties zijn voor de client kant – de configuratie van je persoonlijke voorkeuren. Alhoewel er massa's opties beschikbaar zijn, zal ik alleen een paar behandelen die ofwel veelgebruikt zijn of je werkwijze significant kunnen beïnvloeden. Veel opties zijn alleen bruikbaar in randgevallen waar ik hier niet naar kijk. Als je een lijst van alle opties wil zien, die jou versie van Git herkent kun je dit uitvoeren
 
 	$ git config --help
 
@@ -93,7 +93,7 @@ Je kunt patronen in het `.gitignore` bestand van je project zetten zodat Git ze 
 
 #### help.autocorrect ####
 
-Deze optie is alleen beschikbaar in Git 1.6.1. en later. Als je een commando in Git 1.6 verkeerd typed, toont het je zoiets als dit:
+Deze optie is alleen beschikbaar in Git 1.6.1. en later. Als je een commando in Git 1.6 verkeerd typt, toont het je zoiets als dit:
 
 	$ git com
 	git: 'com' is not a git-command. See 'git --help'.
@@ -101,7 +101,7 @@ Deze optie is alleen beschikbaar in Git 1.6.1. en later. Als je een commando in 
 	Did you mean this?
 	     commit
 
-Als je `het.autocorrect` op 1 instelt, zal Git autoamitsch het commando uitvoeren als het slechts één passend commando heeft in dit scenario.
+Als je `het.autocorrect` op 1 instelt, zal Git automatisch het commando uitvoeren als het slechts één passend commando heeft in dit scenario.
 
 ### Kleuren in Git ###
 
@@ -144,7 +144,7 @@ Je kunt P4Merge hier downloaden:
 
 	http://www.perforce.com/perforce/downloads/component.html
 
-Om te beginnen zul je externe wrapper scripts instellen om je commando's uit te voeren. Ik zal het Mac pad gebruiken voor de applicatie; in andere systemen zal het moeten wijzen naar waar de `p4merge` binary geinstalleerd is. Stel een samenvoeg wrapper script in, genaamd `extMerge`, die je applicatie met alle meegegeven argumenten aanroept:
+Om te beginnen zul je externe wrapper scripts instellen om je commando's uit te voeren. Ik zal het Mac pad gebruiken voor de applicatie; in andere systemen zal het moeten wijzen naar waar de `p4merge` binary geïnstalleerd is. Stel een samenvoeg wrapper script in, genaamd `extMerge`, die je applicatie met alle meegegeven argumenten aanroept:
 
 	$ cat /usr/local/bin/extMerge
 	#!/bin/sh
@@ -187,22 +187,22 @@ Nadat dit alles ingesteld is, zul je als je diff commando's zoals deze uitvoert:
 	
 	$ git diff 32d1776b1^ 32d1776b1
 
-in plaat van de uitvoer van diff op de commando regel, een instantie van P4Merge gestart door Git krijgen, wat er uitziet zoals in Figuur 7-1.
+in plaats van de uitvoer van diff op de commando regel, een instantie van P4Merge gestart door Git krijgen, wat er uitziet zoals in Figuur 7-1.
 
 Insert 18333fig0701.png 
 Figuur 7-1. P4Merge.
 
 Als je twee branches probeert samen te voegen en je krijgt conflicten, dan kun je het `git mergetool` commando uitvoeren; het start P4Merge op om je het conflict op te laten lossen met behulp van dat GUI tool.
 
-Het aardige van deze wrapper opstelling is dat je je diff en merge tools eenvoudig aan kunt passen. Bijvoorbeeld, om je `extDiff` en `extMerge` tools in te stellen dat ze in plaats daarvan het KDiff3 tool uitvoeren, is het enige dat je moet doen je `extMerge` bestand aanpassen:
+Het aardige van deze wrapper opstelling is dat je je diff en merge tools eenvoudig aan kunt passen. Bijvoorbeeld, om je `extDiff` en `extMerge` tools in te stellen dat ze in plaats daarvan de KDiff3 tool uitvoeren, is het enige dat je moet doen je `extMerge` bestand aanpassen:
 
 	$ cat /usr/local/bin/extMerge
 	#!/bin/sh	
 	/Applications/kdiff3.app/Contents/MacOS/kdiff3 $*
 
-Nu zal Git het KDiff3 tool gebruiken voor het tonen van diff en het oplossen van samenvoeg conflicten.
+Nu zal Git de KDiff3 tool gebruiken voor het tonen van diff en het oplossen van samenvoeg conflicten.
 
-Git is al ingesteld om een aantal andere conflict-oplossings tools te gebruiken zonder dat je de cmd configuratie in hoeft te stellen. Je kunt je merge tool op kdiff3 instellen, of opendiff, tkdiff, meld, xxdiff, emerge, vimdiff of gvimdiff. Als je niet geinteresseerd bent in het gebruik van KDiff3 als diff, maar het liever alleen wilt gebruiken voor conflict oplossing, en het kdiff3 commando zit in je pad, dan kun je dit uitvoeren
+Git is al ingesteld om een aantal andere conflict-oplossings tools te gebruiken zonder dat je de cmd configuratie in hoeft te stellen. Je kunt je merge tool op kdiff3 instellen, of opendiff, tkdiff, meld, xxdiff, emerge, vimdiff of gvimdiff. Als je niet geïnteresseerd bent in het gebruik van KDiff3 als diff, maar het liever alleen wilt gebruiken voor conflict oplossing, en het kdiff3 commando zit in je pad, dan kun je dit uitvoeren
 
 	$ git config --global merge.tool kdiff3
 
@@ -220,7 +220,7 @@ Git kan hiermee omgaan door CRLF regeleinden automatisch om te zetten naar LF zo
 
 	$ git config --global core.autocrlf true
 
-Als je op een Linux of Mac systeem zit dat LF regeleinden gebruikt, dan wil je niet dat Git ze autoamisch veranderd op het moment dat Git bestanden uitchecked; maar als een bestand met CRLF regeleinden onverhoopt toch geintroduceerd wordt, dan wil je misschien dat Git dit repareert. Je kunt Git vertellen dat je wilt dat hij CRLF in LF veranderd tijdens het committen, maar niet de andere kant op door het instellen van `core.autocrlf` op input:
+Als je op een Linux of Mac systeem zit dat LF regeleinden gebruikt, dan wil je niet dat Git ze autoamisch veranderd op het moment dat Git bestanden uitchecked; maar als een bestand met CRLF regeleinden onverhoopt toch geïntroduceerd wordt, dan wil je misschien dat Git dit repareert. Je kunt Git vertellen dat je wilt dat hij CRLF in LF veranderd tijdens het committen, maar niet de andere kant op door het instellen van `core.autocrlf` op input:
 
 	$ git config --global core.autocrlf input
 
@@ -232,7 +232,7 @@ Als je een Windows programmeur bent, die een alleen-Windows project doet, dan ku
 
 #### core.whitespace ####
 
-Git is vooraf ingesteld om een aantal witruimte problemen te detecteren en te repareren. Het kan op vier veelvoorkomende witruimte problemen letten – twee stan er standaard aan en kunnen uitgezet worden, en twee staan er standaard niet aan, maar kunnen aangezet worden.
+Git is vooraf ingesteld om een aantal witruimte problemen te detecteren en te repareren. Het kan op vier veelvoorkomende witruimte problemen letten – twee staan er standaard aan en kunnen uitgezet worden, en twee staan er standaard niet aan, maar kunnen aangezet worden.
 
 De twee die standaard aan staan zijn `trailing-space`, wat kijkt of er spaties aan het eind van een regel staan, en `space-before-tab`, wat kijkt of er spaties voor tabs staan aan het begin van een regel.
 
@@ -559,11 +559,11 @@ Al het werk aan de server kant zal in het update bestand in je haken map gaa. He
 
 Ja, ik gebruik een globale variabele. Veroordeel me niet – het is makkelijker om het op deze manier te laten zien.
 
-#### Een Specifiec Commit-Bericht Formaat Afdwingen ####
+#### Een Specifiek Commit-Bericht Formaat Afdwingen ####
 
-Je eerste uitdaging is afdwingen dat ieder commit bericht moet voldoen aan een specifiek formaat. Om maar een doel te hebben, gaan we er vanuit dat ieder bericht een stuk tekst bevat dat eruit ziet asl "ref: 1234", omdat je wil dat iedere commit gekoppeld is aan een werkonderdeel in je ticket systeem. Je moet kijken naar iedere commit die gepushed wordt, zien dat die tekst in de commit boodschap zit, en als de tekst niet in één van de commits zit, met niet nul eindigen zodat de push geweigerd wordt.
+Je eerste uitdaging is afdwingen dat ieder commit bericht moet voldoen aan een specifiek formaat. Om maar een doel te hebben, gaan we er vanuit dat ieder bericht een stuk tekst bevat dat eruit ziet als "ref: 1234", omdat je wil dat iedere commit gekoppeld is aan een werkonderdeel in je ticket systeem. Je moet kijken naar iedere commit die gepushed wordt, zien dat die tekst in de commit boodschap zit, en als de tekst niet in één van de commits zit, met niet nul eindigen zodat de push geweigerd wordt.
 
-Je kunt de lijst met alle SHA-1 waarden van alle commits die gepushed worden verkrijgen door de `$newrev` en `$oldrev` waarden te pakken en ze aan een Git sanitaire voorzieningen commando genaamd `git rev-list` te geven. Dit is eigenlijk het `git log` commando, maar standaard voert het alleen de SHA-1 waarden uit en geen andere informatie. Dus, om een lijst te krijgen van alle commit SHA's die worden geintroduceerd tussen één commit SHA en een andere, kun je zoiets als dit uitvoeren:
+Je kunt de lijst met alle SHA-1 waarden van alle commits die gepushed worden verkrijgen door de `$newrev` en `$oldrev` waarden te pakken en ze aan een Git sanitaire voorzieningen commando genaamd `git rev-list` te geven. Dit is eigenlijk het `git log` commando, maar standaard voert het alleen de SHA-1 waarden uit en geen andere informatie. Dus, om een lijst te krijgen van alle commit SHA's die worden geïntroduceerd tussen één commit SHA en een andere, kun je zoiets als dit uitvoeren:
 
 	$ git rev-list 538c33..d14fc7
 	d14fc7c847ab946ec39590d87783c69b031bdfb7
@@ -610,7 +610,7 @@ Door dat in je `update` script te stoppen, zal het updates weigeren die commits 
 
 #### Een Gebruiker-Gebaseerd ACL Systeem Afdwingen ####
 
-Stel dat je een mechanisme wil toevoegen dat gebruik maakt van een toegangs controle lijst (ACL) die specificeert welke gebruikers zijn toegestaan om wijzigingen te pushen naar welke delen van je project. Sommige mensen hebben volledige toegang, en andere hebben alleen toegang om wijzigingen te pushen naar bepaalde submappen of specifieke bestanden. Om dit af te dwingen zule je die regels schrijven in een bestand genaamd `acl` dat in je bare Git repository op de server leeft. Je zult de `update` haak naar die regels laten kijken, zien welke bestanden worden geintroduceerd voor alle commits die gepushed worden, en bepalen of de gebruiker die de push doet toegang heeft om al die bestanden te wijzigen.
+Stel dat je een mechanisme wil toevoegen dat gebruik maakt van een toegangs controle lijst (ACL) die specificeert welke gebruikers zijn toegestaan om wijzigingen te pushen naar welke delen van je project. Sommige mensen hebben volledige toegang, en andere hebben alleen toegang om wijzigingen te pushen naar bepaalde submappen of specifieke bestanden. Om dit af te dwingen zul je die regels schrijven in een bestand genaamd `acl` dat in je bare Git repository op de server leeft. Je zult de `update` haak naar die regels laten kijken, zien welke bestanden worden geïntroduceerd voor alle commits die gepushed worden, en bepalen of de gebruiker die de push doet toegang heeft om al die bestanden te wijzigen.
 
 Het eerste dat je zult doen is je ACL schrijven. Hier zul je een formaat gebruiken dat erg lijkt op het CVS ACL mechanisme: het gebruikt een serie regels, waarbij het eerste veld `avail` of `unavail` is, het volgende veld een komma gescheiden lijst van de gebruikers is waarvoor de regel geldt, en het laatste veld het pad is waarvoor de regel geldt (leeg betekent open toegang). Alle velden worden gescheiden door een pipe (`|`) karakter.
 
@@ -658,7 +658,7 @@ Je kunt eenvoudig zien welke bestanden gewijzigd zijn in een enkele commit met d
 	README
 	lib/test.rb
 
-Als je gebruik maakt van de ACL struktuur die wordt teruggegeven door de `get_acl_access_data` methode en dat controleerd met de bestanden in elk van de commits, dan kun je bepalen of de gebruiker toegang heeft om al hun commits te pushen:
+Als je gebruik maakt van de ACL struktuur die wordt teruggegeven door de `get_acl_access_data` methode en dat controleert met de bestanden in elk van de commits, dan kun je bepalen of de gebruiker toegang heeft om al hun commits te pushen:
 
 	# staat alleen bepaalde gebruikers toe om bepaalde submappen in een project te wijzigen
 	def check_directory_perms
@@ -693,7 +693,7 @@ Nu kunnen je gebruikers geen commits pushen met slechte berichten of met aangepa
 
 #### Fast-Forward-Only Pushes Afdwingen ####
 
-Het enige overgebleven ding om af te dwingen is fast-forward-only pushes. In Git versie 1.6 of nieuwer, kun je de `receive.denyDeletes` en `receive.denyNonFastForwards` instellingen aanpassen. Maar dit afdwingen met behulp van een haak werkt ook in oudere versies van Git, en je kunt het aanpasen zodat het alleen gebeurd bij bepaalde gebruikers of wat je later ook verzint.
+Het enige overgebleven ding om af te dwingen is fast-forward-only pushes. In Git versie 1.6 of nieuwer, kun je de `receive.denyDeletes` en `receive.denyNonFastForwards` instellingen aanpassen. Maar dit afdwingen met behulp van een haak werkt ook in oudere versies van Git, en je kunt het aanpassen zodat het alleen gebeurd bij bepaalde gebruikers of wat je later ook verzint.
 
 De logica om dit te controleren is zien of iedere commit die bereikbaar is vanuit de oudere revisie, niet bereikbaar is vanuit de nieuwere. Als er geen zijn, dan was het een fast-forward push; anders weiger je het:
 
@@ -834,7 +834,7 @@ moet je dit gebruiken
 
 	files_modified = `git diff-index --cached --name-only HEAD`
 
-Maar dat zijn de enige twee verschillen – voor de rest werkt het scipt op dezelde manier. Een instinker is dat het van je verwacht dat je lokaal werkt als dezelfde gebruiker die pushed naar de remote machine. Als dat verschillend is, moet je de `$user` variabele handmatig instellen.
+Maar dat zijn de enige twee verschillen – voor de rest werkt het scipt op dezelfde manier. Een instinker is dat het van je verwacht dat je lokaal werkt als dezelfde gebruiker die pushed naar de remote machine. Als dat verschillend is, moet je de `$user` variabele handmatig instellen.
 
 Het laatste ding dat je moet doen is controleren dat je niet non-fast-forward referenties probeert te pushen, maar dat komt minder voor. Om een referentie te krijgen dat geen fast-forward is, moet je voorbij een commit rebasen die je al gepushed hebt, of een andere lokale branch naar dezelfde remote branch proberen te pushen.
 
