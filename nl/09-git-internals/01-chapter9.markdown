@@ -185,16 +185,16 @@ Nu kun je je nieuwe commit object bekijken met `cat-file`:
 
 	first commit
 
-Het formaat van een commit object is simpel: het specificeert de bovenste boom voor het snapshot van het project op dat punt; de auteur/committer informatie die uit je `user.name` en `user.email` configuratie instellingen gehaald is, met de huidige tijd; een lege regel, en dan de commit boodschap.
+Het formaat van een commitobject is simpel: het specificeert de bovenste boom voor het snapshot van het project op dat punt; de informatie over auteur en committer die uit je `user.name` en `user.email` configuratieinstellingen gehaald is, met de huidige tijd; een lege regel, en dan de commitboodschap.
 
-Nu zul je de twee andere commit objecten schrijven, waarbij ze elk het commit object dat er direct voor komt refereren:
+Nu zul je de twee andere commitobjecten schrijven, waarbij ze elk verwijzen naar het commitobject dat er direct voor komt:
 
 	$ echo 'second commit' | git commit-tree 0155eb -p fdf4fc3
 	cac0cab538b970a37ea1e769cbbde608743bc96d
 	$ echo 'third commit'  | git commit-tree 3c4e9c -p cac0cab
 	1a410efbd13591db07496601ebc7a059dd55cfe9
 
-Ieder van de drie commit objecten wijst naar één van de drie snapshots die je gemaakt hebt. Vreemd genoeg heb je nu een echte Git historie, die je kunt bekijken met het `git log` commando, als je dat op de SHA-1 van de laatste commit uitvoert:
+Ieder van de drie commitobjecten wijst naar één van de drie snapshots die je gemaakt hebt. Vreemd genoeg heb je nu een echte Githistorie, die je kunt bekijken met het `git log` commando, als je dat op de SHA-1 van de laatste commit uitvoert:
 
 	$ git log --stat 1a410e
 	commit 1a410efbd13591db07496601ebc7a059dd55cfe9
@@ -225,7 +225,7 @@ Ieder van de drie commit objecten wijst naar één van de drie snapshots die je 
 	 test.txt |    1 +
 	 1 files changed, 1 insertions(+), 0 deletions(-)
 
-Verbazingwekkend. Je hebt zojuist de lagere operaties uitgevoerd om een Git history op te bouwen, zonder één van de front ends te gebruiken. Dit is in essentie van Git doet als je de `git add` en `git commit` commando's uitvoerd – het slaat de blobs voor de gewijzigde bestanden op, ververst de index, schrijft de bomen weg, en schrijft commit objecten die de bovenste bomen en commits refereren die vlak voor ze kwamen. Deze drie hoofd Git-objecten – de blob, de boom en de commit – worden in eerste instantie als aparte bestanden opgeslagen in je `.git/objects` map. Hier zijn alle objecten die nu in de voorbeeld map staan, voorzien van commentaar met wat ze bevatten:
+Verbazingwekkend. Je hebt zojuist de lagere operaties uitgevoerd om een Githistory op te bouwen, zonder één van de frontends te gebruiken. Dit is in essentie wat Git doet als je de `git add`- en `git commit`-commando's uitvoert – het slaat de blobs voor de gewijzigde bestanden op, ververst de index, schrijft de bomen weg, en schrijft commitobjecten die de bovenste bomen en commits refereren die vlak voor ze kwamen. Deze drie hoofdobjecten – de blob, de boom en de commit – worden in eerste instantie als aparte bestanden opgeslagen in je `.git/objects` map. Hier zijn alle objecten die nu in de voorbeeldmap staan, voorzien van commentaar met wat ze bevatten:
 
 	$ find .git/objects -type f
 	.git/objects/01/55eb4229851634a0f03eb265b69f5a2d56f341 # tree 2
@@ -242,7 +242,7 @@ Verbazingwekkend. Je hebt zojuist de lagere operaties uitgevoerd om een Git hist
 Als je alle interne verwijzingen volgt, krijg je een object-graaf die er uitzien zoals Figuur 9-3.
 
 Insert 18333fig0903.png 
-Figuur 9-3. Alle objecten in je Git map.
+Figuur 9-3. Alle objecten in je Gitmap.
 
 ### Object Opslag ###
 
