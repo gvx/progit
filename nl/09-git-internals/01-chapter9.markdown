@@ -303,14 +303,14 @@ Om een nieuwe referentie aan te maken, die je zal helpen herinneren waar je laat
 
 	$ echo "1a410efbd13591db07496601ebc7a059dd55cfe9" > .git/refs/heads/master
 
-Nu kun je de head referentie, die je zojuist hebt aangemaakt, gebruiken in je Git commando's, in plaats van de SHA-1 waarde:
+Nu kun je de referentie naar head, die je zojuist hebt aangemaakt, gebruiken in je Gitcommando's, in plaats van de SHA-1 waarde:
 
 	$ git log --pretty=oneline  master
 	1a410efbd13591db07496601ebc7a059dd55cfe9 third commit
 	cac0cab538b970a37ea1e769cbbde608743bc96d second commit
 	fdf4fc3344e67ab068f836878b6c4951e3b15f3d first commit
 
-Je wordt niet aangemoedigd om de referentie bestanden direkt aan te passen. Git levert een veiliger commando mee om dit te doen als je een referentie wilt aanpassen, genaamd `update-ref`:
+Je wordt niet aangemoedigd om de referentiebestanden handmatig aan te passen. Git levert een veiliger commando mee om dit te doen als je een referentie wilt aanpassen, genaamd `update-ref`:
 
 	$ git update-ref refs/heads/master 1a410efbd13591db07496601ebc7a059dd55cfe9
 
@@ -333,7 +333,7 @@ Als je commando's zoals `git branch (branchnaam)` uitvoert, voert Git eigenlijk 
 
 ### De HEAD ###
 
-De vraag is nu, als je `git branch (branchnaam)` uitvoert, hoe weet Git de SHA-1 van de laatste commit? Het antwoord is het HEAD bestand. Het HEAD bestand is een symbolische referentie naar de branch waar je momenteel op zit. Met symbolische referentie bedoel ik dat, in tegenstelling tot een normale referentie, het over het algemeen geen SHA-1 waarde bevat maar een pointer naar een andere referentie. Als je naar het bestand kijkt, zul je normaal gesproken zoiets als dit zien:
+De vraag is nu, als je `git branch (branchnaam)` uitvoert, hoe weet Git de SHA-1 van de laatste commit? Het antwoord is het HEAD-bestand. Het HEAD-bestand is een symbolische referentie naar de branch waar je momenteel op zit. Met symbolische referentie bedoel ik dat, in tegenstelling tot een normale referentie, het over het algemeen geen SHA-1 waarde bevat maar een verwijzing naar een andere referentie. Als je naar het bestand kijkt, zul je normaal gesproken zoiets als dit zien:
 
 	$ cat .git/HEAD 
 	ref: refs/heads/master
@@ -363,13 +363,13 @@ Je kunt geen symbolische referentie instellen die buiten de refs stijl valt:
 
 ### Tags ###
 
-Je bent zojuist door drie hoofdobject types van Git gegaan, maar er bestaat een vierde. Het tag object komt veel overeen met een commit object – het bevat een tagger, een datum, een bericht, en een pointer. Het grootste verschil is dat een tag object naar een commit wijst in plaats van een boom. Het is vergelijkbaar met een branch referentie, maar het beweegt nooit – het zal altijd naar dezelfde commit wijzen, maar geeft het een vriendlijker naam.
+Je bent zojuist door drie hoofdobject types van Git gegaan, maar er bestaat een vierde. Het tagobject komt veel overeen met een commit object – het bevat een tagger, een datum, een bericht, en een verwijzing. Het grootste verschil is dat een tagobject naar een commit wijst in plaats van een boom. Het is vergelijkbaar met een branchreferentie, maar het beweegt nooit – het zal altijd naar dezelfde commit wijzen, maar geeft het een vriendelijkere naam.
 
 Zoals besproken in hoofdstuk 2, zijn er twee soorten tags: beschreven en lichtgewicht. Je kunt een lichtgewicht tag maken door zoiets als dit uit te voeren:
 
 	$ git update-ref refs/tags/v1.0 cac0cab538b970a37ea1e769cbbde608743bc96d
 
-Dat is wat een lichtgewicht tag is – een branch die nooit beweegt. Een beschreven tag is echter complexer. Als je een beschreven tag aanmaakt, creëert Git een tag object en schrijft een referentie die daar naar wijst, in plaats van direct naar de commit. Je kunt dit zien door een beschreven tag aan te maken (`-a` specificeert dat het een beschreven tag is):
+Dat is wat een lichtgewicht tag is – een branch die nooit beweegt. Een beschreven tag is echter complexer. Als je een beschreven tag aanmaakt, creëert Git een tagobject en schrijft een referentie die daar naar wijst, in plaats van direct naar de commit. Je kunt dit zien door een beschreven tag aan te maken (`-a` specificeert dat het een beschreven tag is):
 
 	$ git tag -a v1.1 1a410efbd13591db07496601ebc7a059dd55cfe9 –m 'test tag'
 
@@ -388,15 +388,15 @@ Voer nu het `cat-file` commando uit op die SHA-1 waarde:
 
 	test tag
 
-Zie dat de object regel wijst naar de SHA-1 waarde die je getagged hebt. Zie ook dat het niet naar een commit hoeft te wijzen: je kunt ieder Git object een tag geven. In de Git broncode bijvoorbeeld, heeft de maintainer zijn publieke GPG sleutel als een blob object toegevoegt en het een tag gegeven. Je kunt de publieke sleutel bekijken door dit uit te voeren
+Zie dat de object regel wijst naar de SHA-1 waarde die je getagd hebt. Zie ook dat het niet naar een commit hoeft te wijzen: je kunt ieder Git object een tag geven. In de Git broncode bijvoorbeeld, heeft de onderhouder zijn publieke GPG sleutel als een blob object toegevoegt en het een tag gegeven. Je kunt de publieke sleutel bekijken door dit uit te voeren
 
 	$ git cat-file blob junio-gpg-pub
 
-in de Git broncode. De Linux kernel heeft ook een non-commit-wijzend tag object – het eerste tag object wijst naar de eerste tree van de import van de broncode.
+in de Git broncode. De Linux-kernel heeft ook een tagobject dat niet naar een commit verwijst – het eerste tagobject wijst naar de eerste boom van de import van de broncode.
 
 ### Remotes ###
 
-Het derde soort referentie dat je zult zien is een remote referentie. Als je een remote toevoegt en er naar pushed, slaat Git de laatste waarde van iedere branch op die je gepushed hebt naar die remote in de `refs/remotes` map. Bijvoorbeeld, je kunt een remote genaamd `origin` toevoegen en je master branch hier naar pushen:
+Het derde soort referentie dat je zult zien is een remote referentie. Als je een remote toevoegt en er naar pusht, slaat Git de laatste waarde van iedere branch op die je gepushed hebt naar die remote in de `refs/remotes` map. Bijvoorbeeld, je kunt een remote genaamd `origin` toevoegen en je master branch hier naar pushen:
 
 	$ git remote add origin git@github.com:schacon/simplegit-progit.git
 	$ git push origin master
@@ -407,16 +407,16 @@ Het derde soort referentie dat je zult zien is een remote referentie. Als je een
 	To git@github.com:schacon/simplegit-progit.git
 	   a11bef0..ca82a6d  master -> master
 
-Daarna kun je zien wat de `master` branch op de `origin` remote was toen je voor 't laatst met de server communiceerder, door het `refs/remotes/origin/master`bestand te bekijken:
+Daarna kun je zien wat de `master` branch op de `origin` remote was toen je voor 't laatst met de server communiceerde, door het `refs/remotes/origin/master`bestand te bekijken:
 
 	$ cat .git/refs/remotes/origin/master 
 	ca82a6dff817ec66f44342007202690a93763949
 
-Remote referenties verschillen hoofdzakelijk van branches (`refs/heads referenties) in het feit dat ze niet uitgechecked kunnen worden. Git verplaatst ze als boekenleggers naar de laatste status van die branches op de servers. 
+Remote referenties verschillen hoofdzakelijk van branches (`refs/heads` referenties) in het feit dat ze niet uitgechecked kunnen worden. Git verplaatst ze als boekenleggers naar de laatste status van die branches op de servers. 
 
 ## Packfiles ##
 
-Laten we eens terug gaan naar de object-databank van je test Git repository. Op dit punt heb je 11 objecten – 4 blobs, 3 bomen, 3 commits en 1 tag:
+Laten we eens terug gaan naar de object-databank van je testrepository. Op dit punt heb je 11 objecten – 4 blobs, 3 bomen, 3 commits en 1 tag:
 
 	$ find .git/objects -type f
 	.git/objects/01/55eb4229851634a0f03eb265b69f5a2d56f341 # tree 2
@@ -431,7 +431,7 @@ Laten we eens terug gaan naar de object-databank van je test Git repository. Op 
 	.git/objects/fa/49b077972391ad58037050f2a75f74e3671e92 # new.txt
 	.git/objects/fd/f4fc3344e67ab068f836878b6c4951e3b15f3d # commit 1
 
-Git comprimeert de inhoud van deze bestanden met zlib, en je slaat maar weinig op, dus nemen deze bestanden samen maar 925 bytes in beslag. Je zult nu wat grotere inhoud toevoegen aan het repository om een interessante eigenschap van Git te demonstreren. Voeg het repo.rb bestand toe van de Grit bibliotheek waaraan je eerder gewerkt hebt – dit is een broncode bestand van ongeveer 12K groot:
+Git comprimeert de inhoud van deze bestanden met zlib en je slaat maar weinig op, dus nemen deze bestanden samen maar 925 bytes in beslag. Je zult nu wat grotere inhoud toevoegen aan het repository om een interessante eigenschap van Git te demonstreren. Voeg het repo.rb bestand toe van de Gritbibliotheek waaraan je eerder gewerkt hebt – dit is een broncodebestand van ongeveer 12K groot:
 
 	$ curl http://github.com/mojombo/grit/raw/master/lib/grit/repo.rb > repo.rb
 	$ git add repo.rb 
@@ -442,7 +442,7 @@ Git comprimeert de inhoud van deze bestanden met zlib, en je slaat maar weinig o
 	 create mode 100644 repo.rb
 	 rewrite test.txt (100%)
 
-Als je naar de resulterende boom kijkt, kun je zien welke SHA-1 waarde je repo.rb gekregen heeft voor het blob object:
+Als je naar de resulterende boom kijkt, kun je zien welke SHA-1 waarde je repo.rb gekregen heeft voor het blobobject:
 
 	$ git cat-file -p master^{tree}
 	100644 blob fa49b077972391ad58037050f2a75f74e3671e92      new.txt
@@ -475,7 +475,7 @@ De blob is nu een andere blob, wat betekent dat alhoewel je slechts een enkele r
 
 Je hebt nu twee vrijwel identieke 12K grote objecten op je disk. Zou het niet fijn zijn als Git één van de twee volledig op kon slaan, en het tweede object slechts als delta tussen die en de eerste?
 
-Het blijkt dat dat kan. Het initiele formaat waarin Git objecten opslaat op disk wordt een los object formaat genoemd. Maar, eens in de zoveel tijd pakt Git een aantal van die objecten in een enkel binair bestand wat een packfile genoemd wordt, om wat ruimte te besparen en efficiënter te zijn. Git doet dit als je teveel losse objecten rond hebt slingeren, als je het `git gc` commando handmatig uitvoert, of als je naar een remote server pushed. Om te zien wat er gebeurd, kun je Git handmatig vragen om de objecten in te pakken met het `git gc` commando:
+Het blijkt dat dat kan. Het initiële formaat waarin Git objecten opslaat op de harde schijf wordt een los-objectformaat genoemd. Maar eens in de zoveel tijd pakt Git een aantal van die objecten in een enkel binair bestand wat een packfile genoemd wordt, om wat ruimte te besparen en efficiënter te zijn. Git doet dit als je teveel losse objecten rond hebt slingeren, als je het `git gc` commando handmatig uitvoert, of als je naar een remote server pusht. Om te zien wat er gebeurd, kun je Git handmatig vragen om de objecten in te pakken met het `git gc` commando:
 
 	$ git gc
 	Counting objects: 17, done.
@@ -484,7 +484,7 @@ Het blijkt dat dat kan. Het initiele formaat waarin Git objecten opslaat op disk
 	Writing objects: 100% (17/17), done.
 	Total 17 (delta 1), reused 10 (delta 0)
 
-Als je in je objecten map kijkt, zul je zien dat de meeste objecten verdwenen zijn, en er een aantal nieuwe bestanden verschenen zijn:
+Als je in je objectenmap kijkt, zul je zien dat de meeste objecten verdwenen zijn en er een aantal nieuwe bestanden verschenen zijn:
 
 	$ find .git/objects -type f
 	.git/objects/71/08f7ecb345ee9d0084193f147cdad4d2998293
@@ -495,9 +495,9 @@ Als je in je objecten map kijkt, zul je zien dat de meeste objecten verdwenen zi
 
 De objecten die overgebleven zijn, zijn de blobs waarnaar geen enkel commit wijst – in dit geval zijn het de "what is up, doc?" en de "test content" voorbeeld-blobs die je eerder aangemaakt hebt. Omdat je ze nooit aan een commit toegevoegd hebt, worden ze beschouwd als 'rondslingerend' en worden ze niet in je nieuwe packfile ingepakt.
 
-De andere bestanden zijn je nieuwe packfile en een index. De packfile is een enkel bestand dat de inhoud bevat van alle objecten die van je bestandssysteem verwijderd zijn. De index is een bestand dat offsets binnen de packfile bevat, zodat je snel naar een specifiek object kunt zoeken. Wat cool is, is dat alhoewel de objecten op de disk voordat je `gc` aanriep samen zo'n 12K groot waren, is de nieuwe packfile slechts 6K. Je hebt je diskverbruik gehalveerd door je bestanden in te pakken.
+De andere bestanden zijn je nieuwe packfile en een index. De packfile is een enkel bestand dat de inhoud bevat van alle objecten die van je bestandssysteem verwijderd zijn. De index is een bestand dat offsets binnen de packfile bevat, zodat je snel naar een specifiek object kunt zoeken. Wat cool is, is dat alhoewel de objecten op de disk voordat je `gc` aanriep samen zo'n 12K groot waren, de nieuwe packfile slechts 6K is. Je hebt je schijfgebruik gehalveerd door je bestanden in te pakken.
 
-Hoe doet Git dit? Als Git objecten inpakt, zoekt het naar bestanden die gelijk genaamd en in grootte zijn, en slaat slechts de delta's van één versie van het bestand naar de volgende op. Je kunt in de packfile kijken en zien wat Git gedaan heeft om ruimte te besparen. Het `git verify-pack` sanitaire voorzieningen commando stelt je in staat om te zien wat er ingepakt is:
+Hoe doet Git dit? Als Git objecten inpakt, zoekt het naar bestanden die gelijkend in naam en grootte zijn en slaat slechts de delta's van één versie van het bestand naar de volgende op. Je kunt in de packfile kijken en zien wat Git gedaan heeft om ruimte te besparen. Het commando `git verify-pack` is een sanitaire voorziening die je in staat stelt om te zien wat er ingepakt is:
 
 	$ git verify-pack -v \
 	  .git/objects/pack/pack-7a16e4488ae40c7d2bc56ea2bd43e25212a66c45.idx
@@ -522,7 +522,7 @@ Hoe doet Git dit? Als Git objecten inpakt, zoekt het naar bestanden die gelijk g
 	chain length = 1: 1 object
 	pack-7a16e4488ae40c7d2bc56ea2bd43e25212a66c45.pack: ok
 
-Hier refereert de `9bc1d` blob, wat als je je dat herinnert de eerste versie is van je repo.rb bestand, aan de `05408` blob, wat de tweede versie was van het bestand. De derde kolom in de uitvoer is e grootte van het object in het pakket, zodat je kunt zien dat `05408` 12K van het bestand in beslag neemt maar dat `9bc1d` slechts 7 bytes in beslag neemt. Wat ook interessant is, is dat de tweede versie van het bestand degene is die intakt opgeslagen wordt, terwijl de originele versie als delta opgeslagen wordt – dit is zo gedaan omdat het waarschijnlijker is dat je snellere toegang nodig hebt tot de meest recente versie van het bestand.
+Hier refereert de `9bc1d`-blob, wat als je je dat herinnert de eerste versie is van je repo.rb bestand, aan de `05408` blob, wat de tweede versie was van het bestand. De derde kolom in de uitvoer is de grootte van het object in het pakket, zodat je kunt zien dat `05408` 12K van het bestand in beslag neemt maar dat `9bc1d` slechts 7 bytes in beslag neemt. Wat ook interessant is, is dat de tweede versie van het bestand degene is die intact opgeslagen wordt, terwijl de originele versie als delta opgeslagen wordt – dit is zo gedaan omdat het waarschijnlijker is dat je snellere toegang nodig hebt tot de meest recente versie van het bestand.
 
 Het fijnste van dit alles is, is dat het op ieder gewenst moment opnieuw ingepakt kan worden. Git zal op z'n tijd je databank automatisch opnieuw inpakken, waarmee het altijd meer ruimte wil besparen. Je kunt ook handmatig opnieuw inpakken op ieder tijdstip, door `git gc` met de hand uit te voeren.
 
