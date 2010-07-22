@@ -137,45 +137,45 @@ Op dit punt kunnen andere gebruikers, die SSH toegang hebben tot dezelfde server
 
 	$ git clone user@git.example.com:/opt/git/my_project.git
 
-Als een gebruiker in een server SSH-ed en schrijftoegang heeft tot de `/opt/git/my_project.git` map, dan hebben ze automatisch ook push toegang. Git zal automatisch correct groep schrijfrechten aan een repository toevoegen als je het `git init` commando met de `--shared` optie uitvoert.
+Als een gebruiker in een server SSH-ed en schrijftoegang heeft tot de `/opt/git/my_project.git` map, dan hebben ze automatisch ook push-toegang. Git zal automatisch correct groepsschrijfrechten aan een repository toevoegen als je het `git init` commando met de `--shared`-optie uitvoert.
 
 	$ ssh user@git.example.com
 	$ cd /opt/git/my_project.git
 	$ git init --bare --shared
 
-Je ziet hoe eenvoudig het is om een Git repository te nemen, een bare versie aan te maken, en het op een server plaatsen waar jij en je medewerkers SSH toegang tot hebben. Nu ben je klaar om aan hetzelfde project samen te werken.
+Je ziet hoe eenvoudig het is om een Gitrepository te nemen, een bare versie aan te maken en het op een server plaatsen waar jij en je medewerkers SSH-toegang tot hebben. Nu ben je klaar om aan hetzelfde project samen te werken.
 
 Het is belangrijk om te zien dat dit letterlijk alles is wat je moet doen om een bruikbare Git server te draaien waarop meerdere mensen toegang hebben – voeg alleen een paar SSH accounts toe op een server, en stop een bare repository ergens waar al die gebruikers lees- en schrijftoegang tot hebben. Je bent er klaar voor – je hebt niets anders nodig.
 
-In de volgende secties zul je zien hoe je meer ingewikkelde opstellingen kunt maken. Deze bespreking zal het niet hoeven aanmaken van gebruikers accounts voor elke gebruiker, publieke leestoegang tot repositories, grafische web interfaces, de Gitosis applicatie gebruiken en meer omvatten. Maar, hou in gedachten dat om samen te kunnen werken met mensen op een privé project, alles wat je _nodig_ hebt is een SSH server en een bare repository.
+In de volgende secties zul je zien hoe je ingewikkelder opstellingen kunt maken. Deze bespreking zal het niet hoeven aanmaken van gebruikersaccounts voor elke gebruiker, publieke leestoegang tot repositories, grafische webinterfaces, het gebruik van de Gitosis-applicatie en meer omvatten. Maar hou in gedachten dat om samen te kunnen werken met mensen op een privéproject, een SSH server en een bare repository alles wat je _nodig_ hebt.
 
 ### Kleine Opstellingen ###
 
-Als je met een kleine groep bent of zojuist begint met Git in je organisatie en slechts een paar ontwikkelaars hebt, dan kunnen de dingen eenvoudig voor je zijn. Een van de meest gecompliceerde aspecten van een Git server instellen is gebruikers management. Als je sommige repositories alleen-lezen voor bepaalde gebruikers wilt hebben, en lezen/schrijven voor anderen, dan kunnen toegang en permissies een beetje lastig in te stellen zijn.
+Als je met een kleine groep bent of zojuist begint met Git in je organisatie en slechts een paar ontwikkelaars hebt, dan kunnen de dingen eenvoudig voor je zijn. Een van de meest gecompliceerde aspecten van een Git-server instellen is gebruikersmanagement. Als je sommige repositories alleen-lezen voor bepaalde gebruikers wilt hebben, en lezen/schrijven voor anderen, dan kunnen toegang en permissies een beetje lastig in te stellen zijn.
 
 #### SSH Toegang ####
 
-Als je reeds een server hebt waar al je ontwikkelaars SSH toegang op hebben, dan is het over het algemeen het gemakkelijkst om je eerste repository daar in te stellen, omdat je dan bijna niets hoeft te doen (zoals getoond in de laatste sectie). Als je meer complexe toegangscontrole wilt op je repositories, dan kun je ze instellen met de normale bestandssysteem permissies van het operating systeem dat je server draait.
+Als je reeds een server hebt waar al je ontwikkelaars SSH toegang op hebben, dan is het over het algemeen het gemakkelijkst om je eerste repository daar in te stellen, omdat je dan bijna niets hoeft te doen (zoals getoond in de laatste sectie). Als je meer complexe toegangscontrole wilt op je repositories, dan kun je ze instellen met de normale bestandssysteem permissies van het besturingssysteem dat je server draait.
 
-Als je je repositories op een server wilt zetten, die geen accounts heeft voor iedereen in je team die je schrijftoegang wilt geven, dan moet je SSH toegang voor ze instellen. We gaan er vanuit dat je een server hebt waarmee je dit kunt doen, je reeds een SSH server geinstalleerd hebt, en dat de manier is waarop je toegang hebt tot de server.
+Als je je repositories op een server wilt zetten, die geen accounts heeft voor iedereen in je team die je schrijftoegang wilt geven, dan moet je SSH toegang voor ze instellen. We gaan er vanuit dat je een server hebt waarmee je dit kunt doen, je al een SSH server geïnstalleerd hebt en dat de manier is waarop je toegang hebt tot de server.
 
 Er zijn een paar manieren waarop je iedereen in je team toegang kunt geven. De eerste is voor iedereen accounts aanmaken, wat rechttoe rechtaan is maar omslachtig kan zijn. Je wilt misschien niet `adduser` uitvoeren en tijdelijke wachtwoorden voor iedere gebruiker instellen.
 
-Een tweede methode is een 'git' gebruiker aanmaken op de machine, aan iedere gebruiker die schijftoegang moet hebben vragen of ze je een publieke SSH sleutel sturen, en die sleutel toevoegen aan het `~/.ssh/authorized_keys` bestand van je nieuwe 'git' gebruiker. Vanaf dat punt zal iedereen toegang hebben op die machine via de 'git' gebruiker. Dit tast de commit data op geen enkele manier aan – de SSH gebruiker waarmee je inlogt zal de commits die je opgeslagen hebt niet beïnvloeden.
+Een tweede methode is een 'git' gebruiker aanmaken op de machine, aan iedere gebruiker die schijftoegang moet hebben vragen of ze je een publieke SSH sleutel sturen, en die sleutel toevoegen aan het `~/.ssh/authorized_keys` bestand van je nieuwe 'git' gebruiker. Vanaf dat punt zal iedereen toegang hebben op die machine via de 'git' gebruiker. Dit tast de commitdata op geen enkele manier aan – de SSH gebruiker waarmee je inlogt zal de commits die je opgeslagen hebt niet beïnvloeden.
 
-Een andere manier waarop je het kunt doen is je SSH server laten verifiëren vanaf een LDAP server of een andere gecentraliseerde verificatie bron, die je misschien al ingesteld hebt. Zolang dat iedere gebruiker een shell toegang heeft op de machine, zou ieder SSH verificatie mechanisme dat je kunt bedenken moeten werken.
+Een andere manier waarop je het kunt doen is je SSH server laten verifiëren vanaf een LDAP server of een andere gecentraliseerde verificatiebron, die je misschien al ingesteld hebt. Zolang dat iedere gebruiker een shell toegang heeft op de machine, zou ieder SSH-verificatiemechanisme dat je kunt bedenken moeten werken.
 
 ## Je Publieke SSH Sleutel Genereren ##
 
-Dat gezegd hebbende, zijn er vele Git servers die verifiëren met een publieke SSH sleutel. Om een publieke sleutel te hebben, zal iedere gebruiker in je systeem er een moeten genereren als ze er nog geen hebben. Dit proces is bij alle besturingssystemen vergelijkbaar.
-Als eerste moet je controleren dat je er niet al een hebt. Standaard staan de SSH sleutels van de gebruikers in hun eigen `~/.ssh` map. Je kunt makkelijk nagaan of je al een sleutel hebt door naar die map te gaan en de inhoud te tonen:
+Dat gezegd hebbende, zijn er vele Gitservers die verifiëren met een publieke SSH-sleutel. Om een publieke sleutel te hebben, zal iedere gebruiker in je systeem er een moeten genereren als ze er nog geen hebben. Dit proces is bij alle besturingssystemen vergelijkbaar.
+Als eerste moet je controleren dat je er niet al een hebt. Standaard staan de SSH-sleutels van de gebruikers in hun eigen `~/.ssh`-map. Je kunt makkelijk nagaan of je al een sleutel hebt door naar die map te gaan en de inhoud te tonen:
 
 	$ cd ~/.ssh
 	$ ls
 	authorized_keys2  id_dsa       known_hosts
 	config            id_dsa.pub
 
-Je bent op zoek naar een aantal bestanden genaamd iets en iets.pub, waarbij het iets meestal zoiets is als `id_dsa` of `id_rsa`. Het `.pub` bestand is je publieke sleutel en het andere bestand is je private sleutel. Als je deze bestanden niet hebt (of als je zelfs geen `.ssh` map hebt), dan kun je ze aanmaken door een applicatie genaamd `ssh-keygen` uit te voeren, wat meegeleverd wordt met het SSH pakket op Linux/Mac systemen en meegeleverd wordt met het MSysGit pakket op Windows:
+Je bent op zoek naar een aantal bestanden genaamd iets en iets.pub, waarbij het iets meestal zoiets is als `id_dsa` of `id_rsa`. Het `.pub`-bestand is je publieke sleutel en het andere bestand is je private sleutel. Als je deze bestanden niet hebt (of als je zelfs geen `.ssh` map hebt), dan kun je ze aanmaken door een applicatie genaamd `ssh-keygen` uit te voeren, wat meegeleverd wordt met het SSH pakket op Linux- en Macsystemen en meegeleverd wordt met het MSysGit-pakket op Windows:
 
 	$ ssh-keygen 
 	Generating public/private rsa key pair.
@@ -187,9 +187,9 @@ Je bent op zoek naar een aantal bestanden genaamd iets en iets.pub, waarbij het 
 	The key fingerprint is:
 	43:c5:5b:5f:b1:f1:50:43:ad:20:a6:92:6a:1f:9a:3a schacon@agadorlaptop.local
 
-Eerst bevestigd het de locatie waar je de sleutel wilt opslaan (`.ssh/id_rsa`), en vervolgens vraagt het tweemaal om een wachtzin, die je leeg kunt laten als je geen wachtwoord wilt intypen op het moment dat je de sleutel gebruikt.
+Eerst bevestigd het de locatie waar je de sleutel wilt opslaan (`.ssh/id_rsa`), en vervolgens vraagt het tweemaal om een wachtwoord (of eigenlijk een “wachtzin”, “passphrase” in het Engels), die je leeg kunt laten als je geen wachtwoord wilt intypen op het moment dat je de sleutel gebruikt.
 
-Iedere gebruiker die dit doet, moet zijn sleutel sturen naar jou of degene die de Git server beheerd (aangenomen dat je een SSH server gebruikt die publieke sleutels vereist). Het enige dat ze hoeven doen is de inhoud van het `.pub` bestand kopiëren en e-mailen. De publieke sleutel ziet er ongeveer zo uit:
+Iedere gebruiker die dit doet, moet zijn sleutel sturen naar jou of degene die de Gitserver beheert (aangenomen dat je een SSH-server gebruikt die publieke sleutels vereist). Het enige dat ze hoeven doen is de inhoud van het `.pub` bestand te kopiëren en e-mailen. De publieke sleutel ziet er ongeveer zo uit:
 
 	$ cat ~/.ssh/id_rsa.pub 
 	ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAklOUpkDHrfHY17SbrmTIpNLTGK9Tjom/BWDSU
@@ -199,18 +199,18 @@ Iedere gebruiker die dit doet, moet zijn sleutel sturen naar jou of degene die d
 	mZ+AW4OZPnTPI89ZPmVMLuayrD2cE86Z/il8b+gw3r3+1nKatmIkjn2so1d01QraTlMqVSsbx
 	NrRFi9wrf+M7Q== schacon@agadorlaptop.local
 
-Voor een uitgebreide tutorial over het aanmaken van een SSH sleutel op meerdere operating systemen, zie de GitHub handleiding over SSH sleutels op `http://github.com/guides/providing-your-ssh-key`.
+Voor een uitgebreide tutorial over het aanmaken van een SSH-sleutel op meerdere besturingssystemen, zie de GitHub-handleiding over SSH-sleutels op `http://github.com/guides/providing-your-ssh-key` (Engels).
 
 ## De Server Instellen ##
 
-Laten we het instellen van SSH toegang aan de server kant eens doorlopen. In dit voorbeeld zul je de `authorized_keys` methode gebruiken om je gebruikers te verifiëren. We gaan er ook vanuit dat je een standaard Linux distributie gebruikt zoals Ubuntu. Als eerste creëer je een 'git' gebruiker een een `.ssh` map voor die gebruiker.
+Laten we het instellen van SSH-toegang aan de serverkant eens doorlopen. In dit voorbeeld zul je de `authorized_keys`-methode gebruiken om je gebruikers te verifiëren. We gaan er ook vanuit dat je een standaard Linuxdistributie gebruikt zoals Ubuntu. Als eerste creëer je een 'git'-gebruiker en een `.ssh` map voor die gebruiker.
 
 	$ sudo adduser git
 	$ su git
 	$ cd
 	$ mkdir .ssh
 
-Daarna moet je een aantal publieke SSH sleutels van ontwikkelaars aan het `authorized_keys` bestand toevoegen voor die gebruiker. Laten we aannemen dat je een aantal sleutels per e-mail ontvangen hebt en ze hebt opgeslagen in tijdelijke bestanden. Nogmaals, de sleutels zien er ongeveer zo uit:
+Daarna moet je een aantal publieke SSH-sleutels van ontwikkelaars aan het `authorized_keys`-bestand toevoegen voor die gebruiker. Laten we aannemen dat je een aantal sleutels per e-mail ontvangen hebt en ze hebt opgeslagen in tijdelijke bestanden. Nogmaals, de sleutels zien er ongeveer zo uit:
 
 	$ cat /tmp/id_rsa.john.pub
 	ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCB007n/ww+ouN4gSLKssMxXnBOvf9LGt4L
@@ -220,22 +220,22 @@ Daarna moet je een aantal publieke SSH sleutels van ontwikkelaars aan het `autho
 	O7TCUSBdLQlgMVOFq1I2uPWQOkOWQAHukEOmfjy2jctxSDBQ220ymjaNsHT4kgtZg2AYYgPq
 	dAv8JggJICUvax2T9va5 gsg-keypair
 
-Je voegt ze slechts toe aan je `authorized_keys` bestand:
+Je voegt ze slechts toe aan je `authorized_keys`-bestand:
 
 	$ cat /tmp/id_rsa.john.pub >> ~/.ssh/authorized_keys
 	$ cat /tmp/id_rsa.josie.pub >> ~/.ssh/authorized_keys
 	$ cat /tmp/id_rsa.jessica.pub >> ~/.ssh/authorized_keys
 
-Nu kun je een leeg repository voor ze instellen door `git init` uit te voeren met de `--bare` optie, wat de repository initialiseert zonder een werkmap:
+Nu kun je een leeg repository voor ze instellen door `git init` uit te voeren met de `--bare`-optie, wat de repository initialiseert zonder een werkmap:
 
 	$ cd /opt/git
 	$ mkdir project.git
 	$ cd project.git
 	$ git --bare init
 
-Daarna kunnen John, Josie of Jessica de eerste versie van hun project in dat repository pushen door het als een remote toe te voegen en naar een branch te pushen. Let op dat iemand met een shell in de machine zal moeten loggen een een bare repository moet creëeren, iedere keer als je een project wilt toevoegen. Laten we `gitserver` als hostnaam gebruiken voor de server waar je je 'git' gebruiker en repository hebt ingesteld. Als je het intern gaat draaien, en je de DNS instelt zodat `gitserver` naar die server wijst, dan kun je de commando's vrijwel ongewijzigd gebruiken:
+Daarna kunnen Jan, Joke of Jessica de eerste versie van hun project in dat repository pushen door het als een remote toe te voegen en naar een branch te pushen. Let op dat iemand met een shell in de machine zal moeten loggen een een bare repository moet creëren, iedere keer als je een project wilt toevoegen. Laten we `gitserver` als hostnaam gebruiken voor de server waar je je 'git'-gebruiker en repository hebt ingesteld. Als je het intern gaat draaien, en je de DNS instelt zodat `gitserver` naar die server wijst, dan kun je de commando's vrijwel ongewijzigd gebruiken:
 
-	# op Johns computer
+	# op Jan zijn computer
 	$ cd myproject
 	$ git init
 	$ git add .
@@ -250,10 +250,10 @@ Op dat punt kunnen de anderen het clonen en wijzigingen even gemakkelijk terug p
 	$ git commit -am 'fix for the README file'
 	$ git push origin master
 
-Met deze methode kun je snel een lees/schrijf Git server draaiend krijgen voor een handvol ontwikkelaars.
+Met deze methode kun je snel een lees/schrijf Gitserver draaiend krijgen voor een handvol ontwikkelaars.
 
-Als een extra voorzorgsmaatregel kun je de 'git' gebruiker makkelijk beperken tot het doen van alleen Git activiteiten, met een gelimiteerde shell applicatie genaamd `git-shell` die bij Git geleverd wordt.
-Als je dit als login shell voor je 'git' gebruiker instelt, dan kan de 'git' gebruiker geen normale shell toegang hebben op je server. Specificeer `git-shell` in plaats van bash of csh voor je gebruikers login shell om dit te gebruiken. Om dit te doen zul je waarschijnlijk je `/etc/passwd` bestand aan moeten passen:
+Als een extra voorzorgsmaatregel kun je de 'git'-gebruiker makkelijk beperken tot het doen van alleen Gitactiviteiten, met een gelimiteerde shellapplicatie genaamd `git-shell` die bij Git geleverd wordt.
+Als je dit als login shell voor je 'git'-gebruiker instelt, dan kan de 'git'-gebruiker geen normale shelltoegang hebben op je server. Specificeer `git-shell` in plaats van bash of csh voor je gebruikers login shell om dit te gebruiken. Om dit te doen zul je waarschijnlijk je `/etc/passwd`-bestand aan moeten passen:
 
 	$ sudo vim /etc/passwd
 
@@ -265,7 +265,7 @@ Verander `/bin/sh` in `/usr/bin/git-shell` (of voer `which git-shell` uit om te 
 
 	git:x:1000:1000::/home/git:/usr/bin/git-shell
 
-Nu kan de 'git' gebruiker de SSH connectie alleen gebruiken om Git repositories te pushen en te pullen, en niet om in te loggen in de machine. Als je het probeert zul je een login weigering zoals deze zien:
+Nu kan de 'git'-gebruiker de SSH-connectie alleen gebruiken om Gitrepositories te pushen en te pullen, en niet om in te loggen in de machine. Als je het probeert zal het inloggen geweigerd worden, zoals hier te zien is:
 
 	$ ssh git@gitserver
 	fatal: What do you think I am? A shell?
@@ -273,9 +273,9 @@ Nu kan de 'git' gebruiker de SSH connectie alleen gebruiken om Git repositories 
 
 ## Publieke Toegang ##
 
-Wat als je anonieme leestoegang op je project wil? Misschien wil je geen intern privé project serveren, maar een open source project. Of misschien heb je een serie geautomatiseerde bouwservers of continue integratie servers die vaak wijzigen, en wil je niet doorlopend SSH sleutels hoeven genereren – je wil gewoon eenvoudige leestoegang toevoegen.
+Wat als je anonieme leestoegang op je project wil? Misschien wil je geen intern privéproject serveren, maar een open-source project. Of misschien heb je een serie geautomatiseerde bouwservers of continue-integratie-servers die vaak wijzigen, en wil je niet doorlopend SSH-sleutels hoeven genereren – je wil gewoon eenvoudige leestoegang toevoegen.
 
-Waarschijnlijk is de eenvoudigste manier voor kleinschalige opstellingen om een statische webserver in te stellen, waarbij de document root naar de plaats van je Git repositories wijst, en dan die `post-update` haak aanzetten waar we het in de eerste sectie van dit hoofdstuk over gehad hebben. Laten we eens uitgaan van het vorige voorbeeld. Stel dat je je repositories in de `/opt/git` map hebt staan, en er draait een Apache server op je machine. Nogmaals, je kunt hiervoor iedere web server gebruiken: maar als voorbeeld zullen we wat basis Apache configuraties laten zien, die je een idee kunnen geven van wat je nodig hebt.
+Waarschijnlijk is de eenvoudigste manier voor kleinschalige opstellingen om een statische webserver in te stellen, waarbij de document root naar de plaats van je Gitrepositories wijst, en dan die `post-update` haak aanzetten waar we het in de eerste sectie van dit hoofdstuk over gehad hebben. Laten we eens uitgaan van het vorige voorbeeld. Stel dat je je repositories in de `/opt/git` map hebt staan, en er draait een Apache server op je machine. Nogmaals, je kunt hiervoor iedere webserver gebruiken: maar als voorbeeld zullen we wat basis Apache-configuraties laten zien, die je een idee kunnen geven van wat je nodig hebt.
 
 Eerst moet je de haak aanzetten:
 
@@ -283,17 +283,17 @@ Eerst moet je de haak aanzetten:
 	$ mv hooks/post-update.sample hooks/post-update
 	$ chmod a+x hooks/post-update
 
-Als je een lagere versie dan 1.6 van Git gebruikt, dan is het `mv` commando niet nodig – Git is recentelijk pas begonnen met de namen van de haak voorbeelden op .sample te laten eindigen.
+Als je een lagere versie dan 1.6 van Git gebruikt, dan is het `mv` commando niet nodig – Git is recentelijk pas begonnen met de namen van de haakvoorbeelden op .sample te laten eindigen.
 
-Wat doet deze `post-update` haak? Het ziet er ongeveer zo uit:
+Wat doet deze `post-update`-haak? Het ziet er ongeveer zo uit:
 
 	$ cat .git/hooks/post-update 
 	#!/bin/sh
 	exec git-update-server-info
 
-Dit betekend dat wanneer je naar de server via SSH pushed, Git dit commando uitvoert om de benodigde bestanden voor HTTP fetching te verversen.
+Dit betekent dat wanneer je naar de server via SSH pushed, Git dit commando uitvoert om de benodigde bestanden voor HTTP fetching te verversen.
 
-Vervolgens moet je een VirtualHost toevoeging in je Apache configuratie aanmaken, met de document root als de hoofdmap van je Git projecten. Hier nemen we aan dat je joker DNS ingesteld hebt om `*.gitserver` door te sturen naar waar je dit alles draait:
+Vervolgens moet je een VirtualHost toevoeging in je Apache-configuratie aanmaken, met de document root als de hoofdmap van je Git projecten. Hier nemen we aan dat je joker DNS ingesteld hebt om `*.gitserver` door te sturen naar waar je dit alles draait:
 
 	<VirtualHost *:80>
 	    ServerName git.gitserver
@@ -304,7 +304,7 @@ Vervolgens moet je een VirtualHost toevoeging in je Apache configuratie aanmaken
 	    </Directory>
 	</VirtualHost>
 
-Je zult ook de Unix gebruikers groep van de `/opt/git` mappen moeten instellen op `www-data` zodat je web server leestoegang heeft op de repositories, omdat de Apache instantie die het CGI script uitvoert (standaard) als die gebruiker draait:
+Je zult ook de Unix-gebruikersgroep van de `/opt/git`-mappen moeten instellen op `www-data` zodat je webserver leestoegang heeft op de repositories, omdat de Apache instantie die het CGI script uitvoert (standaard) als die gebruiker draait:
 
 	$ chgrp -R www-data /opt/git
 
@@ -321,17 +321,17 @@ Nu dat je basis lees/schrijf en alleen-lezen toegang tot je project hebt, wil je
 Insert 18333fig0401.png 
 Figuur 4-1. De GitWeb web-gebaseerde gebruikers interface.
 
-Als je wil zien hoe GitWeb er op jouw project uitziet, dan heeft Git een commando waarmee je een tijdelijke instantie op kunt starten als je een lichtgewicht server op je systeem hebt zoals `lighttpd` of `webrick`. Op Linux machines is `lighttpd` vaak geïnstalleerd, dus je kunt het misschien draaiend krijgen door `git instaweb` in te typen in je project map. Als je op een Mac werkt: Leopard heeft Ruby voorgeïnstalleerd, dus `webrick` zou je beste gok kunnen zijn. Om `instaweb` met een server anders dan lighttpd te starten, kun je het uitvoeren met de `--httpd` optie.
+Als je wil zien hoe GitWeb er op jouw project uitziet, dan heeft Git een commando waarmee je een tijdelijke instantie op kunt starten als je een lichtgewicht server op je systeem hebt zoals `lighttpd` of `webrick`. Op Linuxmachines is `lighttpd` vaak geïnstalleerd, dus je kunt het misschien draaiend krijgen door `git instaweb` in te typen in je project map. Als je op een Mac werkt: Leopard heeft Ruby voorgeïnstalleerd, dus `webrick` zou je beste gok kunnen zijn. Om `instaweb` met een server anders dan lighttpd te starten, kun je het uitvoeren met de `--httpd`-optie.
 
 	$ git instaweb --httpd=webrick
 	[2009-02-21 10:02:21] INFO  WEBrick 1.3.1
 	[2009-02-21 10:02:21] INFO  ruby 1.8.6 (2008-03-03) [universal-darwin9.0]
 
-Dat start een HTTPD server op poort 1234 op en start automatisch een web browser op die met die pagina opent. Het is dus makkelijk voor jou. Als je klaar bent en de server wilt afsluiten, dan kun je hetzelfde commando uitvoeren met de `--stop` optie:
+Dat start een HTTPD server op poort 1234 op en start automatisch een webbrowser op die met die pagina opent. Dat is voor jou dus makkelijk. Als je klaar bent en de server wilt afsluiten, dan kun je hetzelfde commando uitvoeren met de `--stop` optie:
 
 	$ git instaweb --httpd=webrick --stop
 
-Als je de web interface doorlopend op een server wilt draaien voor je team of voor een open source project dat je serveert, dan moet je het CGI script instellen zodat het door je normale web server geserveerd wordt. Sommige Linux distributies hebben een `gitweb` pakket dat je misschien kunt installeren via `apt` of `yum`, dus misschien wil je dat eerst proberen. We zullen zeer binnenkort door een handmatige GitWeb installatie heenlopen. Eerst moet je de Git broncode pakken, waar GitWeb bij zit, en het persoonlijke CGI script genereren: 
+Als je de webinterface doorlopend op een server wilt draaien voor je team of voor een open-source project dat je serveert, dan moet je het CGI script instellen zodat het door je normale webserver geserveerd wordt. Sommige Linux distributies hebben een `gitweb`-pakket dat je misschien kunt installeren via `apt` of `yum`, dus misschien wil je dat eerst proberen. We zullen zeer binnenkort door een handmatige GitWeb installatie heenlopen. Eerst moet je de Git broncode pakken, waar GitWeb bij zit, en het persoonlijke CGI script genereren: 
 
 	$ git clone git://git.kernel.org/pub/scm/git/git.git
 	$ cd git/
@@ -339,7 +339,7 @@ Als je de web interface doorlopend op een server wilt draaien voor je team of vo
 	        prefix=/usr gitweb/gitweb.cgi
 	$ sudo cp -Rf gitweb /var/www/
 
-Let op dat je het commando moet vertellen waar het je Git repositories kan vinden met de `GITWEB_PROJECTROOT` variabele. Nu moet je zorgen dat de Apache server CGI gebruikt voor dat script, waarvoor je een VirtualHost kunt toevoegen:
+Let op dat je het commando moet vertellen waar het je Git repositories kan vinden met de `GITWEB_PROJECTROOT` variabele. Nu moet je zorgen dat de Apacheserver CGI gebruikt voor dat script, waarvoor je een VirtualHost kunt toevoegen:
 
 	<VirtualHost *:80>
 	    ServerName gitserver
@@ -354,7 +354,7 @@ Let op dat je het commando moet vertellen waar het je Git repositories kan vinde
 	    </Directory>
 	</VirtualHost>
 
-Nogmaals, GitWeb kan geserveerd worden met iedere CGI capabele web server; als je iets anders prefereert dat zou het niet moeilijk in te stellen moeten zijn. Op dit punt zou je in staat moeten zijn om `http://gitserver/` te bezoeken en je repositories online te zien, en kun je `http://git.gitserver` gebruiken om je repositories over HTTP te clonen en te fetchen.
+Nogmaals, GitWeb kan geserveerd worden met iedere CGI capabele webserver; als je de voorkeur geeft aan iets anders dan zou het niet moeilijk in te stellen moeten zijn. Op dit punt zou je in staat moeten zijn om `http://gitserver/` te bezoeken en je repositories online te zien, en kun je `http://git.gitserver` gebruiken om je repositories over HTTP te clonen en te fetchen.
 
 ## Gitosis ##
 
@@ -466,7 +466,7 @@ Je kunt je eerste push naar het nieuwe `iphone_project` doen door je server als 
 
 Merk op dat je geen pad hoeft te specificeren (sterker nog, het wel doen zal niet werken), alleen een dubbele punt en dan de naam van het project – Gitosis zal het voor je vinden.
 
-Je wil samen met je vrienden aan dit project werken, dus je zult hun publieke sleutels weer toe moeten voegen. Maar in plaats van ze handmatig aan het `~/.ssh/authorized_keys` bestand op je server toe te voegen, voeg je ze, één sleutel per bestand, aan de `keydir` map toe. Hoe je de sleutels noemt bepaalt hoe je naar de gebruikers refereert in het `gitosis.conf` bestand. Laten we de publieke sleutels voor John, Josie en Jessica toevoegen:
+Je wil samen met je vrienden aan dit project werken, dus je zult hun publieke sleutels weer toe moeten voegen. Maar in plaats van ze handmatig aan het `~/.ssh/authorized_keys` bestand op je server toe te voegen, voeg je ze, één sleutel per bestand, aan de `keydir` map toe. Hoe je de sleutels noemt bepaalt hoe je naar de gebruikers refereert in het `gitosis.conf` bestand. Laten we de publieke sleutels voor Jan, Joke en Jessica toevoegen:
 
 	$ cp /tmp/id_rsa.john.pub keydir/john.pub
 	$ cp /tmp/id_rsa.josie.pub keydir/josie.pub
@@ -480,7 +480,7 @@ Nu kun je ze allemaal aan je 'mobile' team toevoegen zodat ze lees- en schrijfto
 
 Daarna commit en push je de wijziging, waarna vier gebruikers in staat zullen zijn te lezen en te schrijven van en naar dat project.
 
-Gitosis heeft ook eenvoudige toegangscontrole. Als je wilt dat John alleen lees toegang tot dit project heeft, dan kun je in plaats daarvan dit doen:
+Gitosis heeft ook eenvoudige toegangscontrole. Als je wilt dat Jan alleen leestoegang tot dit project heeft, dan kun je in plaats daarvan dit doen:
 
 	[group mobile]
 	writable = iphone_project
@@ -490,7 +490,7 @@ Gitosis heeft ook eenvoudige toegangscontrole. Als je wilt dat John alleen lees 
 	readonly = iphone_project
 	members = john
 
-Nu kan John het project clonen en updates krijgen, maar Gitosis zal hem niet toestaan om terug naar het project te pushen. Je kunt zoveel van deze groepen maken als je wilt, waarbij ze allen verschillende gebruikers en projecten mogen bevatten. Je kunt ook een andere groep als een van de leden specificeren (waarbij je `@` als prefix gebruikt), om alle leden automatisch over te erven:
+Nu kan Jan het project clonen en updates krijgen, maar Gitosis zal hem niet toestaan om terug naar het project te pushen. Je kunt zoveel van deze groepen maken als je wilt, waarbij ze allen verschillende gebruikers en projecten mogen bevatten. Je kunt ook een andere groep als een van de leden specificeren (waarbij je `@` als prefix gebruikt), om alle leden automatisch over te erven:
 
 	[group mobile_committers]
 	members = scott josie jessica
@@ -655,14 +655,14 @@ Als je project erg groot is, niet standaard, of privé, dan zal dit proces waars
 
 ### Medewerkers Toevoegen ###
 
-Laten we de rest van het team toevoegen. Als John, Josie en Jessica allemaal intekenen voor accounts op GitHub, en je wilt ze push toegang op je repository geven, kun je ze aan je project toevoegen als medewerkers. Door dat te doen zullen pushes vanaf hun publieke sleutels werken.
+Laten we de rest van het team toevoegen. Als Jan, Joke en Jessica allemaal intekenen voor accounts op GitHub, en je wilt ze push toegang op je repository geven, kun je ze aan je project toevoegen als medewerkers. Door dat te doen zullen pushes vanaf hun publieke sleutels werken.
 
 Klik de "edit" knop aan de bovenkant van het project, of de Admin tab, om de Admin pagina te bereiken van je GitHub project (zie Figuur 4-10).
 
 Insert 18333fig0410.png 
 Figuur 4-10. GitHub administratie pagina.
 
-Om een andere gebruiker schrijftoegang tot je project te geven, klik dan de "Add another collaborator" link. Er verschijnt een nieuw tekstveld, waarin je een gebruikersnaam kunt invullen. Op het moment dat je typt, komt er een hulp omhoog, waarin alle mogelijke overeenkomende gebruikersnamen staan. Als je de juiste gebruiker vind, klik dan de Add knop om die gebruiker als een medewerker aan je project toe te voegen (zie Figuur 4-11). 
+Om een andere gebruiker schrijftoegang tot je project te geven, klik dan de "Add another collaborator" link. Er verschijnt een nieuw tekstveld, waarin je een gebruikersnaam kunt invullen. Op het moment dat je typt, komt er een hulp omhoog, waarin alle mogelijke overeenkomende gebruikersnamen staan. Als je de juiste gebruiker vindt, klik dan de Add knop om die gebruiker als een medewerker aan je project toe te voegen (zie Figuur 4-11). 
 
 Insert 18333fig0411.png 
 Figuur 4-11. Een medewerker aan je project toevoegen.
