@@ -574,13 +574,13 @@ Dat zijn slechts een paar simpele output formaat opties voor `git log` – er zi
 	--name-only	Toon de lijst van bestanden die gewijzigd zijn na de commit informatie.
 	--name-status	Toon ook de lijst van bestanden die beïnvloed zijn door de toegevoegde/gewijzigde/verwijderde informatie.
 	--abbrev-commit	Toon alleen de eerste paar karakters van de SHA-1 checksum in plaats van alle 40.
-	--relative-date	Display the date in a relative format (for example, “2 weeks ago”) instead of using the full date format.
-	--graph	Display Een ASCII grafiek van de branch en merge geschiedenis naast de the log output.
+	--relative-date	Geef de datum in een relatief formaat weer (bijvoorbeeld “2 weeks ago”) in plaats van de volledige datum weer te geven.
+	--graph	Geef een ASCII-grafiek weer van de branch- en merge-geschiedenis naast de uitvoer van het log.
 	--pretty	Toon commits in een alternatief formaat. De opties bevatten oneline, short, full, fuller, en format (waarbij je je eigen formaat specificeert).
 
 ### Log Output Limiteren ###
 
-Naast het formateren van de output, heeft git log nog een aantal bruikbare limiterende opties – dat wil zeggen, opties die je een subset van de commits tonen. Je hebt zo'n optie al gezien – de `-2` optie, die slechts de laatste twee commits laat zien. In feite kun je `-<n>` doen, waarbij `n` ieder heel getal is wat de laatste `n` commits laat zien. In feite zul je deze vorm weinig gebruiken, omdat Git standaard alle output door een pager (pagineer applicatie) stuurt zodat je één pagina log output per keer ziet.
+Naast het formatteren van de output, heeft git log nog een aantal bruikbare limiterende opties – dat wil zeggen, opties die je een subset van de commits tonen. Je hebt zo'n optie al gezien – de `-2` optie, die slechts de laatste twee commits laat zien. In feite kun je `-<n>` doen, waarbij `n` ieder heel getal is wat de laatste `n` commits laat zien. In feite zul je deze vorm weinig gebruiken, omdat Git standaard alle output door een pager (pagineer applicatie) stuurt zodat je één pagina log output per keer ziet.
 
 Maar, de tijd limiterende opties zoals `--since` en `--until` zijn erg handig. Dit commando bijvoorbeeld, geeft een lijst met commits die gedaan zijn gedurende de laatste twee weken:
 
