@@ -580,17 +580,17 @@ Dat zijn slechts een paar simpele output formaat opties voor `git log` – er zi
 
 ### Log Output Limiteren ###
 
-Naast het formatteren van de output, heeft git log nog een aantal bruikbare limiterende opties – dat wil zeggen, opties die je een subset van de commits tonen. Je hebt zo'n optie al gezien – de `-2` optie, die slechts de laatste twee commits laat zien. In feite kun je `-<n>` doen, waarbij `n` ieder heel getal is wat de laatste `n` commits laat zien. In feite zul je deze vorm weinig gebruiken, omdat Git standaard alle output door een pager (pagineer applicatie) stuurt zodat je één pagina log output per keer ziet.
+Naast het formatteren van de output, heeft git log nog een aantal bruikbare filterende opties – dat wil zeggen, opties die je een subset van de commits tonen. Je hebt zo'n optie al gezien – de `-2` optie, die slechts de laatste twee commits laat zien. In feite kun je `-<n>` doen, waarbij `n` ieder heel getal is wat de laatste `n` commits laat zien. In feite zul je deze vorm weinig gebruiken, omdat Git standaard alle output door een pager (pagineerapplicatie) stuurt zodat je één pagina log output per keer ziet.
 
-Maar, de tijd limiterende opties zoals `--since` en `--until` zijn erg handig. Dit commando bijvoorbeeld, geeft een lijst met commits die gedaan zijn gedurende de laatste twee weken:
+Maar de tijdsspannefilterende opties zoals `--since` en `--until` zijn erg handig. Dit commando bijvoorbeeld, geeft een lijst met commits die gemaakt zijn gedurende de laatste twee weken:
 
 	$ git log --since=2.weeks
 
-Dit commando werkt met veel formaten – je kunt een specifieke datum kiezen ("2008-01-15”) of een relatieve datum zoals "2 jaar 1 dag en 3 minuten geleden".
+Dit commando werkt met veel formaten – je kunt een specifieke datum kiezen (“2008-01-15”) of een relatieve datum zoals "2 jaar, 1 dag en 3 minuten geleden".
 
 Je kunt ook de lijst met commits filteren op bepaalde criteria. De `--author` optie laat je filteren op een specifieke auteur, en de `--grep` optie laat je op bepaalde zoekwoorden filteren in de commit boodschappen. (Let op dat als je zowel auteur als grep opties wilt specificeren, je `--all-match` moet toevoegen of anders zal het commando beiden matchen.)
 
-De laatste echt handige optie om aan `git log` als filter mee te geven is een pad. Als je een map of bestandsnaam op geeft, kun je de log output limiteren tot commits die een verandering introduceren op die bestanden. Dit is altijd de laatste optie en wordt over het algemeen vooraf gegaan door dubbele streepjes (`--`) om de paden van de opties te scheiden.
+De laatste echt handige optie om aan `git log` als filter mee te geven is een pad. Als je een map of bestandsnaam op geeft, kun je de log output beperken tot commits die een verandering introduceren op die bestanden. Dit is altijd de laatste optie en wordt over het algemeen vooraf gegaan door dubbele streepjes (`--`) om de paden van de opties te scheiden.
 
 In Tabel 2-3 laten we deze en een paar andere veel voorkomende opties zien als referentie.
 
