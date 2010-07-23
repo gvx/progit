@@ -601,7 +601,7 @@ In Tabel 2-3 laten we deze en een paar andere veel voorkomende opties zien als r
 	--author	Laat alleen de commits zien waarvan de auteur bij de gegeven tekst past.
 	--committer	Laat alleen de commits zien waarvan de committer bij de gegeven tekst past.
 
-Bijvoorbeeld, als je wilt zien welke commits test bestanden in de Git broncode geschiedenis aanpasten waarvan de committer Junio Hamano is en die niet in de maand oktober van 2008 gemerged zijn, kun je zoiets als dit uitvoeren:
+Bijvoorbeeld, als je wilt zien welke commits testbestanden in de broncodegeschiedenis van Git aanpasten waarvan de committer Junio Hamano is en die niet in de maand oktober van 2008 gemerged zijn, kun je zoiets als dit uitvoeren:
 
 	$ git log --pretty="%h - %s" --author=gitster --since="2008-10-01" \
 	   --before="2008-11-01" --no-merges -- t/
@@ -616,12 +616,12 @@ Van de bijna 20.000 commits in de Git broncode historie, laat dit commando de 6 
 
 ### Een Grafische Interface Gebruiken Om De Historie Te Visualiseren ###
 
-Als je een meer grafische applicatie wilt gebruiken om je commit historie te visualiseren, wil je misschien een kijkje nemen naar het Tcl/Tk programma genaamd gitk dat met Git meegeleverd wordt. Gitk is eigenlijk een visuele `git log`, en het accepteerd bijna alle filter opties die `git log` ook accepteerd. Als je gitk in de shell in je project typed, zou je zoiets als in Figuur 2-2 moeten zien.
+Als je een meer grafische applicatie wilt gebruiken om je commit historie te visualiseren, wil je misschien een kijkje nemen naar het Tcl/Tk programma genaamd gitk dat met Git meegeleverd wordt. Gitk is eigenlijk een visuele `git log`, en het accepteert bijna alle filter opties die `git log` ook accepteert. Als je gitk in de shell in je project typt, zou je zoiets als in Figuur 2-2 moeten zien.
 
 Insert 18333fig0202.png 
 Figuur 2-2. De gitk historie visualiseerder.
 
-Je kunt de commit historie in de bovenste helft van het scherm zien, samen met een afkomst graaf. De diff in de onderste helft van het scherm laat je de veranderingen zien die bij iedere commit die je aanklikt geintroduceerd zijn.
+Je kunt de commit historie in de bovenste helft van het scherm zien, samen met een afkomst graaf. De diff in de onderste helft van het scherm laat je de veranderingen zien die bij iedere commit die je aanklikt geïntroduceerd zijn.
 
 ## Dingen Ongedaan Maken ##
 
