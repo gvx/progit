@@ -568,12 +568,12 @@ De oneline en format opties zijn erg handig in combinatie met een andere `log` o
 Dat zijn slechts een paar simpele output formaat opties voor `git log` – er zijn er nog veel meer. Tabel 2-2 toont de opties waarover we het tot nog toe gehad hebben, en wat veel voorkomende formaat opties die je misschien handig vindt, samen met hoe ze de output van het log commando veranderen.
 
 	Optie	Omschrijving
-	-p	Toon de patch geintroduceerd bij iedere commit.
+	-p	Toon de patch geïntroduceerd bij iedere commit.
 	--stat	Toon statistieken voor gewijzigde bestanden in iedere commit.
 	--shortstat	Toon alleen de gewijzigde/ingevoegde/verwijderde regel van het --stat commando.
 	--name-only	Toon de lijst van bestanden die gewijzigd zijn na de commit informatie.
-	--name-status	Toon ook de lijst van bestanden die beinvloed zijn door de toegevoegde/gewijzigde/verwijderde informatie.
-	--abbrev-commit	Toon alleen de eerste paar karakteres van de SHA-1 checksum in plaats van alle 40.
+	--name-status	Toon ook de lijst van bestanden die beïnvloed zijn door de toegevoegde/gewijzigde/verwijderde informatie.
+	--abbrev-commit	Toon alleen de eerste paar karakters van de SHA-1 checksum in plaats van alle 40.
 	--relative-date	Display the date in a relative format (for example, “2 weeks ago”) instead of using the full date format.
 	--graph	Display Een ASCII grafiek van de branch en merge geschiedenis naast de the log output.
 	--pretty	Toon commits in een alternatief formaat. De opties bevatten oneline, short, full, fuller, en format (waarbij je je eigen formaat specificeert).
@@ -1055,31 +1055,31 @@ Voordat we dit hoofdstuk over de basis van Git afsluiten laten we je nog wat kle
 
 ### Auto-Aanvulling ###
 
-Als je de Bash shell gebruikt, heeft Git een fijn auto-aanvulling script dat je aan kunt zetten. Download de Git broncode, en kijk in de `contrib/completion` map; daar zou een bestand genaamd `git-completion.bash` moeten staan. Kopieer dit bestand naar je home map, en voeg dit aan je `.bashrc` bestand toe:
+Als je de Bash shell gebruikt, heeft Git een fijn auto-aanvullingsscript dat je aan kunt zetten. Download de Git broncode en kijk in de `contrib/completion` map; daar zou een bestand genaamd `git-completion.bash` moeten staan. Kopieer dit bestand naar je home map, en voeg dit aan je `.bashrc` bestand toe:
 
 	source ~/.git-completion.bash
 
-Als je Git wilt instellen dat het automatische Bash shell aanvulling heeft voor alle gebruikers, kopieer dit script dan naar de `/opt/local/etc/bash_completion.d` map op Mac systemen, of naar de `/etc/bash_completion.d/` map op Linux systemen. Dit is een map met scripts dat Bash automatisch zal laden om shell aanvullingen aan te bieden.
+Als je Git wilt instellen dat het automatische Bash shell aanvulling heeft voor alle gebruikers, kopieer dit script dan naar de `/opt/local/etc/bash_completion.d` map op Macsystemen, of naar de `/etc/bash_completion.d/` map op Linuxsystemen. Dit is een map met scripts dat Bash automatisch zal laden om shell aanvullingen aan te bieden.
 
-Als je Windows gebruikt met Git Bash, wat de standaard is als je Git op Windows installeerd met msysGit, dan zou auto-aanvulling voorgeconfigureerd moeten zijn.
+Als je Windows gebruikt met Git Bash, wat de standaard is als je Git op Windows installeert met msysGit, dan zou auto-aanvulling voorgeconfigureerd moeten zijn.
 
 Druk de Tab toets als je een Git commando aan het typen bent, en het zou een set suggesties voor je moeten teruggeven:
 
 	$ git co<tab><tab>
 	commit config
 
-In dit geval zal git co en dan de Tab toets twee keer indrukken git commit en config voorstellen. `m<tab>` toevoegen, vult `git commit` automatisch aan.
-	
-Dit werkt ook met opties, wat waarschijnlijk meer bruikbaar is. Bijvoorbeeld, als je een `git log` commando uitvoert en je niet meer kunt herinneren wat een van de opties is, dan kun je beginnen met het te typen en Tab twee keer indrukken om te zien wat er past:
+In dit geval zal git co en dan de Tab toets twee keer indrukken git commit en config voorstellen. Als je dan `m<tab>` typt, wordt het automatisch aangevuld tot `git commit`.
+
+Dit werkt ook met opties, wat waarschijnlijk handiger is. Bijvoorbeeld, als je een `git log` commando uitvoert en je niet meer kunt herinneren wat een van de opties is, dan kun je beginnen met het te typen en Tab twee keer indrukken om te zien wat er past:
 
 	$ git log --s<tab>
 	--shortstat  --since=  --src-prefix=  --stat   --summary
 
-Dat is een erg handig trucje en zal je misschien wat tijd en documentatie lezen besparen.
+Dat is een erg handig trucje en zal je misschien wat tijd besparen die je niet hoeft te besteden aan het lezen van documentatie.
 
-### Git Aliasen ###
+### Git Aliases ###
 
-Git zal geen commando's raden als je het gedeeltelijk intyped. Als je niet de hele tekst van ieder Git commando wilt intypen, kun je gemakkelijk een alias voor ieder commando configureren door `git config` te gebruiken. Hier zijn een aantal voorbeelden die je misschien wilt instellen:
+Git zal geen commando's raden als je het gedeeltelijk intypt. Als je niet de hele tekst van ieder Gitcommando wilt intypen, kun je gemakkelijk een alias voor ieder commando configureren door `git config` te gebruiken. Hier zijn een aantal voorbeelden die je misschien wilt instellen:
 
 	$ git config --global alias.co checkout
 	$ git config --global alias.br branch
@@ -1088,7 +1088,7 @@ Git zal geen commando's raden als je het gedeeltelijk intyped. Als je niet de he
 
 Dit betekend dat je, bijvoorbeeld, in plaats van `git commit` je alleen `git ci` hoeft in te typen. Als je verder gaat met Git, zul je waarschijnlijk andere commando's ook vaker gaan gebruiken; in dat geval, schroom je niet om nieuwe aliassen te maken.
 
-Deze techniek kan ook makkelijk zijn om commando's te maken waarvan je vind dat ze moeten bestaand. Bijvoorbeeld, om het bruikbaarheidsprobleem wat je met het unstagen van een bestand hebt op te lossen, kun je je eigen unstage alias aan Git toevoegen:
+Deze techniek kan ook makkelijk zijn om commando's te maken waarvan je vindt dat ze moeten bestaan. Bijvoorbeeld, om het bruikbaarheidsprobleem wat je met het unstagen van een bestand hebt op te lossen, kun je je eigen unstage-alias aan Git toevoegen:
 
 	$ git config --global alias.unstage 'reset HEAD --'
 
@@ -1112,10 +1112,10 @@ Op deze manier kun je de laatste commit makkelijk zien:
 
 	    Signed-off-by: Scott Chacon <schacon@example.com>
 
-Zoals je kunt zien, vervangt Git eenvoudigweg het nieuwe commando met waarvoor je het gealiassed hebt. Maar, misschien wil je een extern commando uitvoeren, in plaats van een Git subcommando. In dat geval begin je het commando met een `!` karakter. Dit is handig als je je eigen applicaties maakt die met een Git repository werken. We kunnen dit demonstreren door `git visual` een `gitk` te laten uitvoeren:
+Zoals je kunt zien, vervangt Git eenvoudigweg het nieuwe commando met waarvoor je het gealiassed hebt. Maar, misschien wil je een extern commando uitvoeren, in plaats van een Gitsubcommando. In dat geval begin je het commando met een `!` karakter. Dit is handig als je je eigen applicaties maakt die met een Git repository werken. We kunnen dit demonstreren door `git visual` een `gitk` te laten uitvoeren:
 
 	$ git config --global alias.visual "!gitk"
 
 ## Samenvatting ##
 
-Op dit punt kun je alle basis locale Git operaties doen – een repository crëeeren of clonen, wijzigingen maken, de wijzigingen stagen en committen, en de historie van alle veranderingen waardoor het repository gegaan is zien. Als volgende gaan we Gits beste optie bekijken: het branching model. 
+Op dit punt kun je alle lokale basisoperaties met Git – een repository crëeeren of clonen, wijzigingen maken, de wijzigingen stagen en committen en de historie van alle veranderingen waardoor het repository gegaan is zien. Als volgende gaan we Gits beste onderdeel bekijken: het branching model. 
