@@ -710,31 +710,31 @@ Bijvoorbeeld, stel dat je `git push origin master` uitvoert in je project, en `o
 	003e085bb3bcb608e1e84b2432f8ecbe6306e7e7 refs/heads/topic
 	0000
 
-Het `git-receive-pack` commando antwoord onmiddelijk met één regel voor iedere referentie die het momenteel heeft – in dit geval alleen de `master` branch en zijn SHA. De eerste regel bevat ook een lijst van de mogelijkheden van de server (in dit geval, `report-status` en `delete-refs`).
+Het `git-receive-pack` commando antwoordt onmiddellijk met één regel voor iedere referentie die het momenteel heeft – in dit geval alleen de `master` branch en zijn SHA. De eerste regel bevat ook een lijst van de mogelijkheden van de server (in dit geval, `report-status` en `delete-refs`).
 
 Iedere regel begint met een hexadecimale waarde van 4 bytes, die specificeert hoe lang de rest van de regel is. Je eerste regel begint met 005b, wat 91 in hex is, wat betekend dat er nog 91 bytes over zijn op deze regel. De volgende regel begint met 003e, wat 62 is, zodat je de overgebleven 62 bytes leest. De volgende regel is 0000, wat betekent dat de server klaar is met het tonen van zijn referenties.
 
-Nu dat het de status van de server weet, bepaalt je `send-pack` proces welke commits dat het heeft, die de server nog niet heeft. Voor iedere referentie die deze push zal vernieuwen, verteld het `send-pack` het `receive-pack` proces die informatie. Bijvoorbeeld, als je de `master` branch vernieuwt en een `experiment` branch toevoegt, zou het `send-pack` antwoord er zo uit kunnen zien:
+Nu dat het de status van de server weet, bepaalt je `send-pack` proces welke commits dat het heeft, die de server nog niet heeft. Voor iedere referentie die deze push zal vernieuwen, vertelt het `send-pack` het `receive-pack` proces die informatie. Bijvoorbeeld, als je de `master`-branch vernieuwt en een `experiment`-branch toevoegt, zou het `send-pack` antwoord er zo uit kunnen zien:
 
 	0085ca82a6dff817ec66f44342007202690a93763949  15027957951b64cf874c3557a0f3547bd83b3ff6 refs/heads/master report-status
 	00670000000000000000000000000000000000000000 cdfdb42577e2506715f8cfeacdbabc092bf63e8d refs/heads/experiment
 	0000
 
-Een SHA-1 waarde met alleen '0' betekent dat er nog niets was – omdat je de experiment referentie toevoegt. Als je een referentie aan het verwijderen was, zou je het tegenovergestelde zien: allemaal '0' aan de rechterkant.
+Een SHA-1 waarde met alleen '0' betekent dat er nog niets was – omdat je de experiment-referentie toevoegt. Als je een referentie aan het verwijderen was, zou je het tegenovergestelde zien: allemaal '0' aan de rechterkant.
 
-Git stuurt een regel voor iedere referentie die je vernieuwt, met de oude SHA, de nieuwe SHA en de referentie die vernieuwd wordt. De eerste regel bevat ook de mogelijkheden van de client. Vervolgens upload de client een packfile met alle objecten die de server nog niet heeft. Als laatste antwoord de server met een succes (of mislukking) indicatie:
+Git stuurt een regel voor iedere referentie die je vernieuwt, met de oude SHA, de nieuwe SHA en de referentie die vernieuwd wordt. De eerste regel bevat ook de mogelijkheden van de cliënt. Vervolgens uploadt de cliënt een packfile met alle objecten die de server nog niet heeft. Als laatste antwoord de server met een succes (of mislukking) indicatie:
 
 	000Aunpack ok
 
 #### Gegevens Downloaden ####
 
-Op het moment dat je gegevens download zijn de `fetch-pack` en `upload-pack` processen betrokken. De client start een `fetch-pack` proces dat verbinding maakt met een `upload-pack` proces aan de remote kant om te onderhandelen welke gegevens gestuurd moeten worden.
+Op het moment dat je gegevens download zijn de `fetch-pack` en `upload-pack` processen betrokken. De cliënt start een `fetch-pack` proces dat verbinding maakt met een `upload-pack` proces aan de remote kant om te onderhandelen welke gegevens gestuurd moeten worden.
 
 Er zijn verschillende manieren om het `upload-pack` proces op de remote repository te starten. Je kunt het uitvoeren via SSH, op dezelfde manier als het `receive-pack` proces. Je kunt het proces ook starten via de Git daemon, die standaard op poort 9418 luistert. Het `fetch-pack` proces stuurt gegevens, die er zo uitzien voor de daemon na het maken van de verbinding:
 
 	003fgit-upload-pack schacon/simplegit-progit.git\0host=myserver.com\0
 
-Het begint met de 4 bytes die specificeren hoeveel gegevens er volgen, daarna het commando gevolgd door een null byte, en dan de hostname van de server gevolgd door een laatste null byte. De Git daemon bekijkt of dat commando uitgevoerd kan worden, dat het repository bestaat en dat het publieke permissies heeft. Als alles OK is, dan start het het `upload-pack` proces en geeft hier het verzoek aan door.
+Het begint met de 4 bytes die specificeren hoeveel gegevens er volgen, daarna het commando gevolgd door een nullbyte, en dan de hostname van de server gevolgd door een laatste nullbyte. De Git daemon bekijkt of dat commando uitgevoerd kan worden, dat het repository bestaat en dat het publieke permissies heeft. Als alles OK is, dan start het het `upload-pack` proces en geeft hier het verzoek aan door.
 
 Als je de fetch via SSH dper, voert het `fetch-pack` in plaats daarvan zoiets als dit uit:
 
@@ -748,9 +748,9 @@ In beide gevallen stuurt `upload-pack`, nadat `fetch-pack` verbinding gemaakt he
 	003e085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7 refs/heads/topic
 	0000
 
-Dit komt erg overeen met waarmee `receive-pack` antwoord, maar de mogelijkheden zijn verschillend. Daarnaast stuurt het de HEAD referentie zodat de client weet wat er uitgechecked moet worden als dit een clone is.
+Dit komt erg overeen met waarmee `receive-pack` antwoordt, maar de mogelijkheden zijn verschillend. Daarnaast stuurt het de HEAD-referentie zodat de client weet wat er uitgecheckt moet worden als dit een clone is.
 
-Op dit punt kijkt het `fetch-pack` process naar welk objecten dat het heeft en antwoord met de objecten die het nodig heeft door "want" te sturen, gevolgd door de SHA die het wil. Het stuurt al de objecten die het al heeft met "have" en dan de SHA. Aan het einde van deze lijst, schrijft het "done" om het `upload-pack` proces te starten met het sturen van de packfile van de gegevens die het nodig heeft:
+Op dit punt kijkt het `fetch-pack`-proces naar welk objecten dat het heeft en antwoordt met de objecten die het nodig heeft door "want" te sturen, gevolgd door de SHA die het wil. Het stuurt al de objecten die het al heeft met "have" en dan de SHA. Aan het einde van deze lijst, schrijft het "done" om het `upload-pack` proces te starten met het sturen van de packfile van de gegevens die het nodig heeft:
 
 	0054want ca82a6dff817ec66f44342007202690a93763949 ofs-delta
 	0032have 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7
@@ -781,7 +781,7 @@ Het andere ding dat `gc` zal doen is je referenties in een enkel bestand inpakke
 	.git/refs/tags/v1.0
 	.git/refs/tags/v1.1
 
-Als je `git gc` uitvoert, zul je deze bestanden niet langer in de `refs` map hebben. Git zal ze omwille van efficientie in een bestand genaamd `.git/packed-refs` stoppen, dat er zo uitziet:
+Als je `git gc` uitvoert, zul je deze bestanden niet langer in de `refs` map hebben. Git zal ze omwille van efficiëntie in een bestand genaamd `.git/packed-refs` stoppen, dat er zo uitziet:
 
 	$ cat .git/packed-refs 
 	# pack-refs with: peeled 
@@ -819,7 +819,7 @@ Nu verplaats je de `master` branch terug naar de middelste commit:
 
 Je bent nu effectief de twee bovenste commits kwijt – je hebt geen branch vanwaar deze commits bereikbaar zijn. Je moet de laatste commit-SHA vinden en dan een branch toevoegen die daar naar wijst. De truc is om de laatste commit-SHA te vinden – het is toch niet alsof je die onthouden hebt, toch?
 
-Vaak is de snelste manier een tool genaamd `git reflog` te gebruiken. Terwijl je werkt slaat Git stilletjes op wat je HEAD is, iedere keer als je die wijzigt. Iedere keer dat je commit, of van branch verandert wordt de reflog vernieuwd. Het reflog wordt ook vernieuwd door het `git update-ref` commando, wat nog een reden is om het te gebruiken in plaats van gewoon de SHA's naar je ref bestanden te schrijven, zoals we beschreven hebben in de "Git References" sectie eerder in dit hoofdstuk. Je kunt op ieder moment zien waar je geweest bent, door `git reflog` uit te voeren.
+Vaak is de snelste manier een tool genaamd `git reflog` te gebruiken. Terwijl je werkt, slaat Git stilletjes op wat je HEAD is, iedere keer als je die wijzigt. Iedere keer dat je commit, of van branch verandert wordt de reflog vernieuwd. Het reflog wordt ook vernieuwt door het `git update-ref` commando, wat nog een reden is om het te gebruiken in plaats van gewoon de SHA's naar je ref bestanden te schrijven, zoals we beschreven hebben in de "Git References" sectie eerder in dit hoofdstuk. Je kunt op ieder moment zien waar je geweest bent, door `git reflog` uit te voeren.
 
 	$ git reflog
 	1a410ef HEAD@{0}: 1a410efbd13591db07496601ebc7a059dd55cfe9: updating HEAD
@@ -860,7 +860,7 @@ Vervolgens, stel dat je verloren commit om een of andere reden niet in de reflog
 	$ git branch –D recover-branch
 	$ rm -Rf .git/logs/
 
-Omdat de reflog gegevens bewaard worden in de `.git/logs/` map, heb je effectief geen reflog. Hoe kun je die commit op dat punt herstellen? Één manier is om gebruik te maken van het `git fsck` tool, wat de integriteit van je gegevensbank controleert. Als je het met de `--full` optie uitvoert, dan toont het je alle objecten waarnaar niet gewezen wordt door een ander object:
+Omdat de reflog-gegevens bewaard worden in de `.git/logs/` map, heb je effectief geen reflog. Hoe kun je die commit op dat punt herstellen? Eén manier is om gebruik te maken van het `git fsck` tool, wat de integriteit van je gegevensbank controleert. Als je het met de `--full` optie uitvoert, dan toont het je alle objecten waarnaar niet gewezen wordt door een ander object:
 
 	$ git fsck --full
 	dangling blob d670460b4b4aece5915caf5c68d12f560a9fe3e4
@@ -974,4 +974,4 @@ De grootte van je ingepakte repository is omlaag gegaan naar 7 K, wat veel beter
 
 Je moet een goed begrip hebben van wat Git op de achtergrond doet en, tot een bepaalde hoogte, hoe het in elkaar gezet is. Dit hoofdstuk heeft een aantal sanitaire voorzieningen commado's beslagen – commando's die op een lager nivo zitten en eenvoudige zijn dan de porcelein commando's waarover je in de rest van het boek geleerd hebt. Begrijpen hoe Git op een lager niveau werkt zou het makkelijker moeten maken om te begrijpen waarom het doet wat het doet en ook om je eigen applicaties te schrijven en hulp scripts om jouw specifieke werkwijze voor je te laten werken.
 
-Git is als een inhouds-toegankelijk bestandssysteem een zeer krachtig tool dat je eenvoudig als meer dan alleen een VCS kunt gebruiken. Ik hoop dat je je nieuwe kennis van de werking van Git kunt gebruiken om je eigen coole applicatie te bouwen met deze technologie en je op je gemak voelt bij geavanceerder gebruik van Git.
+Git is als een inhouds-toegankelijk bestandssysteem een zeer krachtige tool dat je eenvoudig als meer dan alleen een VCS kunt gebruiken. Ik hoop dat je je nieuwe kennis van de werking van Git kunt gebruiken om je eigen coole applicatie te bouwen met deze technologie en je op je gemak voelt bij geavanceerder gebruik van Git.
