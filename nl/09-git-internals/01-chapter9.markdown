@@ -4,13 +4,13 @@ Je zult misschien naar dit hoofdstuk gesprongen zijn vanuit een vorig hoofdstuk,
 
 Laten we beginnen, nu je hier bent. Als eerste, mocht het nog niet duidelijk zijn, is Git eigenlijk een inhouds-toegankelijk bestandssyteem met een gebruikersinterface voor versiebeheer er bovenop geschreven. Je zult over een poosje meer leren over wat dit betekent.
 
-In de eerste dagen van Git (het meerendeel pre 1.5), wat de gebruikersinterface veel complexer, omdat het de nadruk legde op dit bestandssysteem in plaats van op een gepolijst VCS. De laatste paar jaren is de interface verfijnd totdat het zo netjes en eenvoudig te gebruiken is als ieder systeem dat er bestaat; maar vaak blijft het stereotype hangen over de vroegere Gitinterface, die complex was en moeilijk te leren.
+In de eerste dagen van Git (het merendeel pre 1.5), wat de gebruikersinterface veel complexer, omdat het de nadruk legde op dit bestandssysteem in plaats van op een gepolijst VCS. De laatste paar jaren is de interface verfijnd totdat het zo netjes en eenvoudig te gebruiken is als ieder systeem dat er bestaat; maar vaak blijft het stereotype hangen over de vroegere Gitinterface, die complex was en moeilijk te leren.
 
 Deze laag met het inhouds-toegankelijke bestandssysteem is ongelofelijk gaaf, dus dat behandel ik dat als eerste dit hoofdstuk; daarna leer je over de transportmechanismen en het onderhouden van je repository's, iets waar je uiteindelijk te maken mee kunt krijgen.
 
 ## Sanitaire Inrichtingen en Porcelein ##
 
-Dit boek behandeld Git met ongeveer 30 werkwoorden zoals `checkout`, `branch`, `remote` enzovoorts. Maar omdat Git in eerste instantie een toolkit voor een VCS was, in plaats van een volledig gebruiksvriendelijk VCS, heeft het een berg werkwoorden die laagbijdegronds werk doen en ontworpen waren om samengevoegd te worken zoals in UNIX gebruikelijk is, of vanuit scripts aangeroepen te worden. Naar deze commando's wordt over het algemeen als "plumbing" (sanitaire voorzieningen) commando's verwezen, en de meer gebruiksvriendelijke commando's worden "porcelain" (porcelein) commando's genoemd.
+Dit boek behandeld Git met ongeveer 30 werkwoorden zoals `checkout`, `branch`, `remote` enzovoorts. Maar omdat Git in eerste instantie een toolkit voor een VCS was, in plaats van een volledig gebruiksvriendelijk VCS, heeft het een berg werkwoorden die laag-bij-de-gronds werk doen en ontworpen waren om samengevoegd te worken zoals in UNIX gebruikelijk is, of vanuit scripts aangeroepen te worden. Naar deze commando's wordt over het algemeen als "plumbing" (sanitaire voorzieningen) commando's verwezen, en de meer gebruiksvriendelijke commando's worden "porcelain" (porcelein) commando's genoemd.
 
 De eerste acht hoofdstukken van het boek behandelen bijna alleen porceleincommando's. Maar in dit hoofdstuk zul je het meest op het laagste niveau van de sanitaire voorzieningen om te gaan. Zij geven je toegang tot de diepste delen van Git, en demonstreren hoe en waarom Git doet wat het doet. Deze commando's zijn niet bedoeld voor normaal gebruik op de commandoregel, maar meer om als bouwstenen voor nieuwe tools en scripts gebruikt te worden.
 
@@ -547,13 +547,13 @@ In het standaard geval dat automatisch geschreven wordt door een `git remote add
 	$ git log remotes/origin/master
 	$ git log refs/remotes/origin/master
 
-Ze zijn allemaal gelijk, omdat Git elk expandeerd naar `refs/remotes/origin/master`.
+Ze zijn allemaal gelijk, omdat Git elk expandeert naar `refs/remotes/origin/master`.
 
-Als je wilt dat Git alleen de `master` branch pulled, en niet alle andere branches op de remote server, kun je de fetch regel veranderen in
+Als je wilt dat Git alleen de `master` branch pullt, en niet alle andere branches op de remote server, kun je de fetch-regel veranderen in
 
 	fetch = +refs/heads/master:refs/remotes/origin/master
 
-Dit is alleen de standaard refspec voor `git fetch` voor die remote. Als je iets alleen eenmalig wilt doen, kun je de refspec ook op de commandoregel specificeren. Om de `master` branch op de remote naar de lokale `origin/mymaster` te pullen, kun je dit uitvoeren
+Dit is alleen de standaard refspec voor `git fetch` voor die remote. Als je iets alleen eenmalig wilt doen, kun je de refspec ook op de commandoregel specificeren. Om de `master` branch op de remote naar de lokale `origin/mymaster` te pullen, kun je dit uitvoeren:
 
 	$ git fetch origin master:refs/remotes/origin/mymaster
 
@@ -567,7 +567,7 @@ Je kunt ook meerdere refspecs specificeren. Met de commandoregel kun je meerdere
 
 In dit geval wordt de pull van de master branch geweigerd, omdat het geen fast-forward referentie is. Je kunt dat teniet doen door de `+` voor de refspec te zetten.
 
-Je kun ook meerdere refspecs voor het fetchen specificeren in je configuratie bestand. Als je altijd de master en experiment branches wilt fetchen, voeg dan twee regels toe:
+Je kun ook meerdere refspecs voor het fetchen specificeren in je configuratiebestand. Als je altijd de master- en experimentbranches wilt fetchen, voeg dan twee regels toe:
 
 	[remote "origin"]
 	       url = git@github.com:schacon/simplegit-progit.git
@@ -578,14 +578,14 @@ Je kunt geen gedeeltelijke globs in het patroon gebruiken, dus het volgende zou 
 
 	fetch = +refs/heads/qa*:refs/remotes/origin/qa*
 
-Maar je kunt wel naamruimtes gebruiken om zoiets voor elkaar te krijgen. Als je een QA team hebt dat naar een serie branches pushed, en je wilt de master branch en alle QA team branches hebben, maar niets anders, kun je een configuratie sectie zoals dit gebruiken:
+Maar je kunt wel naamruimtes gebruiken om zoiets voor elkaar te krijgen. Als je een QA team hebt dat naar een serie branches pushed, en je wilt de masterbranch en alle QA team branches hebben, maar niets anders, kun je een configuratiesectie zoals dit gebruiken:
 
 	[remote "origin"]
 	       url = git@github.com:schacon/simplegit-progit.git
 	       fetch = +refs/heads/master:refs/remotes/origin/master
 	       fetch = +refs/heads/qa/*:refs/remotes/origin/qa/*
 
-Als je een ingewikkeld werkproces hebt waarbij het QA team branches pushed, ontwikkelaars branches pushen, en integratie teams pushen en samenwerken op remote branches, kun je ze op deze manier eenvoudig in naamruimten stoppen.
+Als je een ingewikkeld werkproces hebt waarbij het QA team branches pusht, ontwikkelaars branches pushen, en integratieteams pushen en samenwerken op remote branches, kun je ze op deze manier eenvoudig in naamruimten stoppen.
 
 ### Refspecs Pushen ###
 
@@ -595,7 +595,7 @@ Als het QA team hun `master` branch naar `qa/master` op de remoter server wil pu
 
 	$ git push origin master:refs/heads/qa/master
 
-Als ze willen dat Git dat automatisch doet iedere keer als ze `git push origin` uitvoeren, dan kunnen ze een push waarde aan hun configuratie bestand toevoegen:
+Als ze willen dat Git dat automatisch doet iedere keer als ze `git push origin` uitvoeren, dan kunnen ze een push-waarde aan hun configuratie bestand toevoegen:
 
 	[remote "origin"]
 	       url = git@github.com:schacon/simplegit-progit.git
@@ -618,7 +618,7 @@ Git kan gegevens tussen twee repositories hoofdzakelijk overdragen op twee manie
 
 ### Het Domme Protocol ###
 
-Naar Git overdracht over HTTP wordt vaak gerefereerd als het domme protocol, omdat het geen Git-specifieke code vereist op de server gedurene het overdrachtsprocess. Het fetch process is een reeks van GET verzoeken, waarbij de client de opmaak van het Git repository van de server kan overnemen. Laten we het `http-fetch` process eens volgen voor de simplegit bibliotheek:
+Naar Git overdracht over HTTP wordt vaak gerefereerd als het domme protocol, omdat het geen Git-specifieke code vereist op de server gedurende het overdrachtsprocess. Het fetch process is een reeks van GET verzoeken, waarbij de client de opmaak van het Git repository van de server kan overnemen. Laten we het `http-fetch` process eens volgen voor de simplegit bibliotheek:
 
 	$ git clone http://github.com/schacon/simplegit-progit.git
 
@@ -761,17 +761,17 @@ Dat is een basaal geval van de overdrachtsprotocollen. In meer complexe gevallen
 
 ## Onderhoud en het Herstellen van Gegevens ##
 
-Soms moet je wat opruimen – een repository compacter maken, een geimporteerd repository opruimen, of verloren werk terughalen. Deze sectie zal deze scenario's doorlopen.
+Soms moet je wat opruimen – een repository compacter maken, een geïmporteerd repository opruimen, of verloren werk terughalen. Deze sectie zal deze scenario's doorlopen.
 
 ### Onderhoud ###
 
-Soms voert Git automatisch een commando genaamg "auto gc" uit. Het meerendeel van de tijd doet dit commando niets. Maar, als je teveel losse objecten (objecten die niet in een packfile zitten) of teveel packfiles hebt, dan lanceert Git een volledig `git gc` commando. Het `gc` staat voor garbage collect (afval ophalen), en het commando doet een aantal zaken: het haalt alle losse objecten op en stopt ze in packfiles, het voegt packfiles samen in één grote packfile, en het verwijderd objecten die niet bereikbaar zijn vanuit een commit en die een paar maanden oud zijn.
+Soms voert Git automatisch een commando genaamd "auto gc" uit. Het merendeel van de tijd doet dit commando niets. Maar, als je teveel losse objecten (objecten die niet in een packfile zitten) of teveel packfiles hebt, dan lanceert Git een volledig `git gc` commando. Het `gc` staat voor garbage collect (afval ophalen), en het commando doet een aantal zaken: het haalt alle losse objecten op en stopt ze in packfiles, het voegt packfiles samen in één grote packfile, en het verwijdert objecten die niet bereikbaar zijn vanuit een commit en die een paar maanden oud zijn.
 
 Je kunt auto gc als volgt handmatig uitvoeren:
 
 	$ git gc --auto
 
-Nogmaals, over het algemeen doet dit commando niets. Je moet ongeveer 7.000 losse objecten of meer dan 50 packfiles hebben voordat Git een echt gc commando start. Je kunt deze grenzen respectievelijk met de `gc.auto` en `gc.autopacklimit` configuratie instellingen aanpassen.
+Nogmaals, over het algemeen doet dit commando niets. Je moet ongeveer 7.000 losse objecten of meer dan 50 packfiles hebben voordat Git een echt gc commando start. Je kunt deze grenzen met respectievelijk de `gc.auto` en `gc.autopacklimit` configuratie-instellingen aanpassen.
 
 Het andere ding dat `gc` zal doen is je referenties in een enkel bestand inpakken. Stel dat je repository de volgende branches en tags bevat:
 
@@ -797,9 +797,9 @@ Let op de laatste regel van het bestand, die begint met een `^`. Dit betekent da
 
 ### Gegevens Herstellen ###
 
-Op een bepaald punt in je reis met Git, kun je per ongeluk wel eens een commit verliezen. Over het algemeen gebeurd dit omdat je een branch force-delete, waar werk op zat, en het blijkt dat je de branch uit eindelijk toch wou hebben; of je hard-reset een branch, waarmee je commits achterlaat waar je iets van wou hebben. Stel dat dit gebeurd, hoe kun je dan je commits terug halen?
+Op een bepaald punt in je reis met Git, kun je per ongeluk wel eens een commit verliezen. Over het algemeen gebeurd dit omdat je een branch force-delete, waar werk op zat, en het blijkt dat je de branch uit eindelijk toch wou hebben; of je hard-reset een branch, waarmee je commits achterlaat waar je iets van wou hebben. Stel dat dit gebeurt, hoe kun je dan je commits terug halen?
 
-Hier is een voorbeeld dat een hard-reset doet naar een oudere commit op de master branch in je test repository, en de verloren commits terug haalt. Laten we eerst eens bekijken waar je repository op dit punt staat:
+Hier is een voorbeeld dat een hard-reset doet naar een oudere commit op de masterbranch in je testrepository, en de verloren commits terug haalt. Laten we eerst eens bekijken waar je repository op dit punt staat:
 
 	$ git log --pretty=oneline
 	ab1afef80fac8e34258ff41fc1b867c702daa24b modified repo a bit
@@ -817,15 +817,15 @@ Nu verplaats je de `master` branch terug naar de middelste commit:
 	cac0cab538b970a37ea1e769cbbde608743bc96d second commit
 	fdf4fc3344e67ab068f836878b6c4951e3b15f3d first commit
 
-Je bent nu effectief de twee bovenste commits kwijt – je hebt geen branch vanwaar deze commits bereikbaar zijn. Je moet de laatste commit SHA vinden en dan een branch toevoegen die daar naar wijst. De truuk is om de laatste commit SHA te vinden – het is toch niet alsof je die onthouden hebt, toch?
+Je bent nu effectief de twee bovenste commits kwijt – je hebt geen branch vanwaar deze commits bereikbaar zijn. Je moet de laatste commit-SHA vinden en dan een branch toevoegen die daar naar wijst. De truc is om de laatste commit-SHA te vinden – het is toch niet alsof je die onthouden hebt, toch?
 
-Vaak is de snelste manier een tool genaamd `git reflog` te gebruiken. Terwijl je werkt slaat Git stilletjes op wat je HEAD is, iedere keer als je die wijzigt. Iedere keer dat je commit, of van branch veranderd wordt de reflog vernieuwd. Het reflog wordt ook vernieuwd door het `git update-ref` commando, wat nog een reden is om het te gebruiken in plaats van gewoon de SHA's naar je ref bestanden te schrijven, zoals we beschreven hebben in de "Git References" sectie eerder in dit hoofdstuk. Je kunt op ieder moment zien waar je geweest bent, door `git reflog` uit te voeren.
+Vaak is de snelste manier een tool genaamd `git reflog` te gebruiken. Terwijl je werkt slaat Git stilletjes op wat je HEAD is, iedere keer als je die wijzigt. Iedere keer dat je commit, of van branch verandert wordt de reflog vernieuwd. Het reflog wordt ook vernieuwd door het `git update-ref` commando, wat nog een reden is om het te gebruiken in plaats van gewoon de SHA's naar je ref bestanden te schrijven, zoals we beschreven hebben in de "Git References" sectie eerder in dit hoofdstuk. Je kunt op ieder moment zien waar je geweest bent, door `git reflog` uit te voeren.
 
 	$ git reflog
 	1a410ef HEAD@{0}: 1a410efbd13591db07496601ebc7a059dd55cfe9: updating HEAD
 	ab1afef HEAD@{1}: ab1afef80fac8e34258ff41fc1b867c702daa24b: updating HEAD
 
-Hier kunnen we de twee commits zien die we uitgechecked hadden, maar er is niet veel informatie aanwezig. Om dezelfde informatie op een veel bruikbaarder manier kunnen we `git log -g` uitvoeren, wat je een normale log uitvoer geeft voor je reflog.
+Hier kunnen we de twee commits zien die we uitgecheckt hadden, maar er is niet veel informatie aanwezig. Om dezelfde informatie op een veel bruikbaarder manier kunnen we `git log -g` uitvoeren, wat je een normale log-uitvoer geeft voor je reflog.
 
 	$ git log -g
 	commit 1a410efbd13591db07496601ebc7a059dd55cfe9
@@ -868,17 +868,17 @@ Omdat de reflog gegevens bewaard worden in de `.git/logs/` map, heb je effectief
 	dangling tree aea790b9a58f6cf6f2804eeac9f0abbe9631e4c9
 	dangling blob 7108f7ecb345ee9d0084193f147cdad4d2998293
 
-In dit geval, kun je je vermiste commit zien na de hangende commit. Je kunt het op dezelfde manier herstellen, door een branch toe te voegen die naar die SHA wijst.
+In dit geval, kun je je vermiste commit zien na de hangende (dangling) commit. Je kunt het op dezelfde manier herstellen, door een branch toe te voegen die naar die SHA wijst.
 
 ### Objecten Verwijderen ###
 
-Er zijn een hoop geweldige dingen aan Git, maar één eigenschap die problemen kan geven is het feit dat `git clone` de hele historie van het project download, inclusief alle versies van alle bestanden. Dat is geen probleem als het hele ding broncode is, omdat Git zeer geoptimaliseerd is om die gegevens optimaal te comprimeren. Maar, als iemand op een bepaald punt in de geschiedenis een enkel enorm bestand heeft toegevoegd, zal iedere clone voor altijd gedwongen worden om dat grote bestand te downloaden, zelfs als het uit het project was verwijderd in de volgende commit. Omdat het bereikbaar is vanuit de geschiedenis, zal het er altijd zijn.
+Er zijn een hoop geweldige dingen aan Git, maar één eigenschap die problemen kan geven is het feit dat `git clone` de hele historie van het project downloadt, inclusief alle versies van alle bestanden. Dat is geen probleem als het hele ding broncode is, omdat Git zeer geoptimaliseerd is om die gegevens optimaal te comprimeren. Maar, als iemand op een bepaald punt in de geschiedenis een enkel enorm bestand heeft toegevoegd, zal iedere clone voor altijd gedwongen worden om dat grote bestand te downloaden, zelfs als het uit het project was verwijderd in de volgende commit. Omdat het bereikbaar is vanuit de geschiedenis, zal het er altijd zijn.
 
-Dit kan een groot probleem zijn als je Subversion of Perforce repositories omzet naar Git. Omdat je niet de hele geschiedenis download in die systemen, zal dit soort toevoeging een paar gevolgen met zich meebrengen. Als je een import vanuit een ander systeem deed, of om een andere reden vindt dat je repository veel groter is dan het zou moeten zijn, kun je hier zien hoe je grote objecten kunt vinden en verwijderen.
+Dit kan een groot probleem zijn als je Subversion of Perforce repositories omzet naar Git. Omdat je niet de hele geschiedenis downloadt in die systemen, zal dit soort toevoegingen een paar gevolgen met zich meebrengen. Als je een import vanuit een ander systeem deed, of om een andere reden vindt dat je repository veel groter is dan het zou moeten zijn, kun je hier zien hoe je grote objecten kunt vinden en verwijderen.
 
-Let op: deze techniek is verwoestend voor je commit geschiedenis. Het herschrijft ieder commit object stroomafwaarts vanaf de eerste boom die je moet aanpassen om een referentie naar een groot bestand te verwijderen. Als je dit meteen na een import doet, voordat iemand werk is gaan baseren op de commit, dan is er niets aan de hand – anders moet je alle bijdragers waarschuwen dat ze hun werk op je nieuwe commits moeten rebasen.
+Let op: deze techniek is verwoestend voor je commitgeschiedenis. Het herschrijft ieder commit object stroomafwaarts vanaf de eerste boom die je moet aanpassen om een referentie naar een groot bestand te verwijderen. Als je dit meteen na een import doet, voordat iemand werk is gaan baseren op de commit, dan is er niets aan de hand – anders moet je alle bijdragers waarschuwen dat ze hun werk op je nieuwe commits moeten rebasen.
 
-Om het te demonstreren, voeg je een groot bestand in je test repository toe, verwijderd het in de volgende commit, vindt het, en verwijderd het permanent uit het repository. Als eerste, voeg je een groot object toe aan je geschiedenis:
+Om het te demonstreren, voeg je een groot bestand in je testrepository toe, verwijder je het in de volgende commit, vind je het, en verwijder je het permanent uit het repository. Als eerste, voeg je een groot object toe aan je geschiedenis:
 
 	$ curl http://kernel.org/pub/software/scm/git/git-1.6.3.1.tar.bz2 > git.tbz2
 	$ git add git.tbz2
@@ -887,7 +887,7 @@ Om het te demonstreren, voeg je een groot bestand in je test repository toe, ver
 	 1 files changed, 0 insertions(+), 0 deletions(-)
 	 create mode 100644 git.tbz2
 
-Oops — je wou geen enorme tarball toevoegen aan je project. Laten we er snel vanaf zien te komen:
+Oeps — je wou geen enorme tarball toevoegen aan je project. Laten we er snel vanaf zien te komen:
 
 	$ git rm git.tbz2 
 	rm 'git.tbz2'
@@ -916,14 +916,14 @@ Je kunt het `count-objects` commando gebruiken om snel te zien hoeveel ruimte je
 	prune-packable: 0
 	garbage: 0
 
-Op de `size-pack` regel staat de grootte van je packfiles in kilobytes, dus je gebruikt 2Mb. Voor de laatste commit gebruikte je bijna 2K – dus het is duidelijk dat het verwijderen van het bestand uit de vorige commit, het niet uit je geschiedenis verwijderd heeft. Iedere keer als iemand dit repository cloned, zullen ze de volle 2Mb moeten clonen alleen maar om dit kleine project te krijgen, omdat jij per ongeluk een groot bestand toegevoegd hebt. Laten we het kwijtraken.
+Op de `size-pack` regel staat de grootte van je packfiles in kilobytes, dus je gebruikt 2Mb. Voor de laatste commit gebruikte je bijna 2K – dus het is duidelijk dat het verwijderen van het bestand uit de vorige commit, het niet uit je geschiedenis verwijderd heeft. Iedere keer als iemand dit repository clonet, zullen ze de volle 2Mb moeten clonen alleen maar om dit kleine project te krijgen, omdat jij per ongeluk een groot bestand toegevoegd hebt. Laten we het kwijtraken.
 
-Eerst moet je het vinden. In dit geval weet je al welk bestand het is. Maar stel dat je het niet wist; hoe zou je kunnen vinden welk bestand of bestanden zoveel ruimte in beslag nemen? Als je `git gc` uitvoert zitten alle objecten in een packfile; je kunt de grote bestanden identificeren door een ander sanitaire voorzieningen commando genaamd `git verify-pack` uit te voeren en te sorteren op het derde veld in de uitvoer, wat de bestandsgrootte is. Je kunt het ook door het `tail` commando leiden omdat je alleen geinteresseerd bent in het laatste paar grote bestanden. 
+Eerst moet je het vinden. In dit geval weet je al welk bestand het is. Maar stel dat je het niet wist; hoe zou je kunnen vinden welk bestand of bestanden zoveel ruimte in beslag nemen? Als je `git gc` uitvoert zitten alle objecten in een packfile; je kunt de grote bestanden identificeren door een ander sanitaire-voorzieningen-commando genaamd `git verify-pack` uit te voeren en te sorteren op het derde veld in de uitvoer, wat de bestandsgrootte is. Je kunt het ook door het `tail` commando leiden omdat je alleen geïnteresseerd bent in het laatste paar grote bestanden. 
 
 	$ git verify-pack -v .git/objects/pack/pack-3f8c0...bb.idx | sort -k 3 -n | tail -3
 	e3f094f522629ae358806b17daf78246c27c007b blob   1486 734 4667
 	05408d195263d853f09dca71d55116663690c27c blob   12908 3478 1189
-	7a9eb2fba2b1811321254ac360970fc169ba2330 blob   2056716 2056872 5401
+	7a9eb2fba2b1811321254ac360970fc169ba2330 blob   2056716 2056872 540--1
 
 Het grote object staat aan het einde: 2 Mb. Om uit te vinden welk bestand het is, zul je het `rev-list` commando gebruiken, wat je kort gebruikt hebt in Hoofdstuk 7. Als je `--objects` meegeeft aan `ref-list`, toont het alle commit SHA's en ook de blob SHA's met de bestandspaden die er aan geassocieerd zijn. Je kunt dit gebruiken om de naam van je blob te vinden:
 
@@ -936,7 +936,7 @@ Nu moet je dit bestand verwijderen van alle bomen in je verleden. Je kunt eenvou
 	da3f30d019005479c99eb4c3406225613985a1db oops - removed large tarball
 	6df764092f3e7c8f5f94cbe08ee5cf42e92a0289 added git tarball
 
-Je moet alle commits die stroomafwaarts van `6df76` liggen om dit bestand volledig uit je Git geschiedenis te verwijderen. Omdat te doen gebuik je `filter-branch`, wat je in Hoofdstuk 6 gebruikt hebt:
+Je moet alle commits die stroomafwaarts van `6df76` liggen om dit bestand volledig uit je Git geschiedenis te verwijderen. Omdat te doen gebruik je `filter-branch`, wat je in Hoofdstuk 6 gebruikt hebt:
 
 	$ git filter-branch --index-filter \
 	   'git rm --cached --ignore-unmatch git.tbz2' -- 6df7640^..
@@ -944,7 +944,7 @@ Je moet alle commits die stroomafwaarts van `6df76` liggen om dit bestand volled
 	Rewrite da3f30d019005479c99eb4c3406225613985a1db (2/2)
 	Ref 'refs/heads/master' was rewritten
 
-De `--index-filter` optie is vergelijkbaar met de `--tree-filter` optie, die gebruikt is in Hoofstuk 6, behalve dan dat in plaats van het doorgeven van een commando dat bestanden aanpast die uitgechecked staan op je schijf, pas je je staging gebied of index iedere keer aan. In plaats van een specifiek bestand steeds te verwijderen met zoiets als `rm file`, moet je het met `git rm --cached` verwijderen – je moet het uit de index verwijderen, niet van de schijf. Reden om het zo te doen is snelheid – omdat Git niet iedere versie hoeft uit te checken op je schijf voordat het je filter uitvoert, kan het proces vele, vele malen sneller gaan. Je kunt dezelfde taak uitvoeren met `--tree-filter` als je dat wil. De `--ignore-unmatch` optie op `git rm` verteld het niet te stoppen op een fout als het patroon dat je probeert te verwijderen niet aanwezig is. Als laatste zul je `filter-branch` vragen om je geschiedenis alleen vanaf de `6df7640` commit te herschrijven, omdat je weet dat dat de plaats is waar het probleem begon. Anders start het vanaf het begin en duurt het onnodig langer.
+De `--index-filter` optie is vergelijkbaar met de `--tree-filter` optie, die gebruikt is in Hoofstuk 6, behalve dan dat in plaats van het doorgeven van een commando dat bestanden aanpast die uitgecheckt staan op je schijf, pas je je staging gebied of index iedere keer aan. In plaats van een specifiek bestand steeds te verwijderen met zoiets als `rm file`, moet je het met `git rm --cached` verwijderen – je moet het uit de index verwijderen, niet van de schijf. Reden om het zo te doen is snelheid – omdat Git niet iedere versie hoeft uit te checken op je schijf voordat het je filter uitvoert, kan het proces vele, vele malen sneller gaan. Je kunt dezelfde taak uitvoeren met `--tree-filter` als je dat wil. De `--ignore-unmatch` optie op `git rm` vertelt het niet te stoppen op een fout als het patroon dat je probeert te verwijderen niet aanwezig is. Als laatste zul je `filter-branch` vragen om je geschiedenis alleen vanaf de `6df7640` commit te herschrijven, omdat je weet dat dat de plaats is waar het probleem begon. Anders start het vanaf het begin en duurt het onnodig langer.
 
 Je geschiedenis zal niet langer een referentie bevatten naar dat bestand. Maar, je reflog en een nieuwe set refs die Git toevoegde toen je de `filter-branch` deed onder `.git/refs/original` bevatten het nog steeds, dus je moet die ook verwijderen en je gegevensbank opnieuw inpakken. Je moet alles dat een pointer naar die oude commits bevat kwijtraken voordat je opnieuw inpakt:
 
@@ -968,10 +968,10 @@ Laten we eens zien hoeveel ruimte je bespaard hebt.
 	prune-packable: 0
 	garbage: 0
 
-De grootte van je ingepakte repository is omlaag gegaan naar 7 K, wat veel beter is dan 2 Mb. Je kunt aan de waarde van size zien dat het grootte object nog steeds in je losse bestanden staat, dus het is niet weg; maar het zal niet meer overgedragen worden bij een push of opvolgende clone, wat het belangrijkste is. Als je het echt zou willen, kun je het object volledig verwijderen door `git prune --expire` uit te voeren.
+De grootte van je ingepakte repository is omlaag gegaan naar 7 K, wat veel beter is dan 2 Mb. Je kunt aan de waarde van size zien dat het grote object nog steeds in je losse bestanden staat, dus het is niet weg; maar het zal niet meer overgedragen worden bij een push of opvolgende clone, wat het belangrijkste is. Als je het echt zou willen, kun je het object volledig verwijderen door `git prune --expire` uit te voeren.
 
 ## Samenvatting ##
 
-Je moet een goed begrip hebben van wat Git op de achtergrond doet en, tot een bepaalde hoogte, hoe het in elkaar gezet is. Dit hoofdstuk heeft een aantal sanitaire voorzieningen commado's beslagen – commando's die op een lager nivo zitten en eenvoudige zijn dan de porcelein commando's waarover je in de rest van het boek geleerd hebt. Begrijpen hoe Git op een lager nivo werkt zou het makkelijker moeten maken om te begrijpen waarom het doet wat het doet en ook om je eigen applicaties te schrijven en hulp scripts om jouw specifieke werkwijze voor je te laten werken.
+Je moet een goed begrip hebben van wat Git op de achtergrond doet en, tot een bepaalde hoogte, hoe het in elkaar gezet is. Dit hoofdstuk heeft een aantal sanitaire voorzieningen commado's beslagen – commando's die op een lager nivo zitten en eenvoudige zijn dan de porcelein commando's waarover je in de rest van het boek geleerd hebt. Begrijpen hoe Git op een lager niveau werkt zou het makkelijker moeten maken om te begrijpen waarom het doet wat het doet en ook om je eigen applicaties te schrijven en hulp scripts om jouw specifieke werkwijze voor je te laten werken.
 
-Git is als een inhouds-toegankelijk bestandssysteem een zeer krachtig tool dat je eenvoudig als meer dan alleen een VCS kunt gebruiken. Ik hoop dat je je nieuwe kennis van de werking van Git kunt gebruiken om je eigen coole applicatie te bouwen met deze technologie en je op je gemak voelt bij het gebruik van Git op meer geavanceerde manieren.
+Git is als een inhouds-toegankelijk bestandssysteem een zeer krachtig tool dat je eenvoudig als meer dan alleen een VCS kunt gebruiken. Ik hoop dat je je nieuwe kennis van de werking van Git kunt gebruiken om je eigen coole applicatie te bouwen met deze technologie en je op je gemak voelt bij geavanceerder gebruik van Git.
